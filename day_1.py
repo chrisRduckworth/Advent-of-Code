@@ -12,3 +12,9 @@ def sum_calibration_values(calibration_values):
         calibration_value = int(calibration_value)
         total += calibration_value
     return total
+
+with open("inputs/day_1.txt") as f:
+    calibration_values = f.read()
+    print(calibration_values)
+    total = sum_calibration_values(calibration_values)
+    print(total)
