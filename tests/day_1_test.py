@@ -19,3 +19,22 @@ class TestSumCalibrationValues:
         input_values = "1abc2\npqr3stu8vwx\na1b2c3d4e5f\ntreb7uchet"
         output = sum_calibration_values(input_values)
         assert output == 142
+
+    def test_replaces_words_with_digits(self):
+        """replaces words with digits"""
+        input_values = "two1nine"
+        output = sum_calibration_values(input_values)
+        assert output == 29
+
+    def test_handles_overlap(self):
+        """handles overlap of number names"""
+        input_values = "eighthree"
+        output = sum_calibration_values(input_values)
+        assert output == 83
+    
+    def test_relaces_words_with_digits_multiple_values(self):
+        """replaces words with digits across all values"""
+        input_values = "two1nine\neightwothree\nabcone2threexyz\nxtwone3four\n4nineeightseven2\nzoneight234\n7pqrstsixteen"
+        output = sum_calibration_values(input_values)
+        assert output == 281
+        
