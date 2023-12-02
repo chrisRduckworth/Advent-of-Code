@@ -22,8 +22,13 @@ def sum_minimum_powers(games):
         red_cubes = [int(cubes) for cubes in re.findall(r"\d+(?= red)", game)]
         green_cubes = [int(cubes) for cubes in re.findall(r"\d+(?= green)", game)]
         blue_cubes = [int(cubes) for cubes in re.findall(r"\d+(?= blue)", game)]
+        if not red_cubes:
+            red_cubes = [1]
+        if not green_cubes:
+            green_cubes = [1]
+        if not blue_cubes:
+            blue_cubes = [1]
         minimum_power = max(red_cubes) * max(green_cubes) * max(blue_cubes)
-        print(minimum_power)
         total += minimum_power
     return total
 
