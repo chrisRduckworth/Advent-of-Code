@@ -36,4 +36,7 @@ if __name__ == "__main__":
     with open("inputs/day_2.txt") as f:
         games = f.read()
         total = sum_valid_games(games)
-        print(total)
+        print("Sum of valid game IDs: ", total)
+        minimum_power = sum_minimum_powers(games)
+        print("Sum of minimum powers: ", minimum_power)
+        
