@@ -56,3 +56,11 @@ class TestSumMinimumPowers:
         sum_of_minimum_powers = sum_minimum_powers(games)
 
         assert sum_of_minimum_powers == 2286
+    
+    def test_games_with_two_or_one_colours(self):
+        games = "Game 1 : 3 blue; 2 red; 5 blue\nGame 2: 3 blue; 2 blue; 5 blue" 
+
+        sum_of_minimum_powers = sum_minimum_powers(games)
+        
+        assert sum_of_minimum_powers == 15
+    # need to test for games with only one/two colours
