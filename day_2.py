@@ -15,3 +15,8 @@ def sum_valid_games(games):
             total += int(game_id)
     return total
 
+if __name__ == "__main__":
+    with open("inputs/day_2.txt") as f:
+        games = f.read()
+        total = sum_valid_games(games)
+        print(total)
