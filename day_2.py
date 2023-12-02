@@ -15,6 +15,18 @@ def sum_valid_games(games):
             total += int(game_id)
     return total
 
+def sum_minimum_powers(games):
+    games = games.splitlines()
+    total = 0
+    for game in games:
+        red_cubes = [int(cubes) for cubes in re.findall(r"\d+(?= red)", game)]
+        green_cubes = [int(cubes) for cubes in re.findall(r"\d+(?= green)", game)]
+        blue_cubes = [int(cubes) for cubes in re.findall(r"\d+(?= blue)", game)]
+        minimum_power = max(red_cubes) * max(green_cubes) * max(blue_cubes)
+        print(minimum_power)
+        total += minimum_power
+    return total
+
 if __name__ == "__main__":
     with open("inputs/day_2.txt") as f:
         games = f.read()
