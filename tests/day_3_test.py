@@ -2,8 +2,6 @@ from day_3 import has_adjacent_symbol, sum_part_numbers
 import pytest
 
 class TestHasAdjacentSymbol:
-    # need: works for start/end of row
-    # detects adjacent symbol (including numbers)
     def test_detects_no_symbols(self):
         """returns false if no symbols are adjacent"""
         input_rows = ["...",".5.","..."]
@@ -58,7 +56,23 @@ class TestHasAdjacentSymbol:
         assert output_4 == True
 
     def test_start_index_zero(self):
-        pass
+        """compensates for numbers start at the beginning of the row"""
+        input_rows = [".....","5..55","....."]
+        input_rows_2 = ["@.@..","5..55", "....."]
+        
+        output = has_adjacent_symbol(0, 1, input_rows)
+        output_2 = has_adjacent_symbol(0, 1, input_rows_2)
+
+        assert output == False
+        assert output_2 == True
 
     def test_start_index_at_the_end(self):
-        pass
+        """compensates for numbers ending at the end of the row"""
+        input_rows = [".....","5..55","....."]
+        input_rows_2 = ["@.@..","5..55", "....."]
+        
+        output = has_adjacent_symbol(3, 2, input_rows)
+        output_2 = has_adjacent_symbol(3, 2, input_rows_2)
+
+        assert output == False
+        assert output_2 == True
