@@ -76,3 +76,25 @@ class TestHasAdjacentSymbol:
 
         assert output == False
         assert output_2 == True
+
+class TestSumPartNumbers:
+    def test_sums_numbers_with_adjacent_symbols(self):
+        schematic = "467..1\n@..5.~\n1.&..."
+
+        output = sum_part_numbers(schematic)
+
+        assert output == 474
+
+    def test_ignores_numbers_with_no_symbols(self):
+        schematic = "467..1\n......\n1.5..."
+
+        output = sum_part_numbers(schematic)
+
+        assert output == 0
+    
+    def test_mixed_numbers(self):
+        schematic = "467..114..\n...*......\n..35..633.\n......@...\n617*......\n.....+.58.\n..592.....\n......755.\n...$.*....\n.664.598.."
+
+        output = sum_part_numbers(schematic)
+        
+        assert output == 4361
