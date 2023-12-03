@@ -6,7 +6,7 @@ class TestHasAdjacentSymbol:
     # detects adjacent symbol (including numbers)
     def test_detects_no_symbols(self):
         """returns false if no symbols are adjacent"""
-        input_rows = [["...",".5.","..."]]
+        input_rows = ["...",".5.","..."]
 
         output = has_adjacent_symbol(1, 1, input_rows)
 
@@ -14,10 +14,10 @@ class TestHasAdjacentSymbol:
 
     def test_detects_adjacent_symbols(self):
         """returns true if there is an adjacent symbol"""
-        input_rows = [[".@.",".5.","..."]]
-        input_rows_2 = [["...","~5.","..."]]
-        input_rows_3 = [["...",".5.",".[."]]
-        input_rows_4 = [["...",".5a","..."]]
+        input_rows = [".@.",".5.","..."]
+        input_rows_2 = ["...","~5.","..."]
+        input_rows_3 = ["...",".5.",".[."]
+        input_rows_4 = ["...",".5a","..."]
 
         output = has_adjacent_symbol(1, 1, input_rows)
         output_2 = has_adjacent_symbol(1, 1, input_rows_2)
@@ -31,8 +31,8 @@ class TestHasAdjacentSymbol:
 
     def test_detects_adjacent_numbers(self):
         """returns true if there is an adjacent number (above/below)"""
-        input_rows = [[".5.",".5.","..."]]
-        input_rows_2 = [["...",".5.",".5."]]
+        input_rows = [".5.",".5.","..."]
+        input_rows_2 = ["...",".5.",".5."]
 
         output = has_adjacent_symbol(1, 1, input_rows)
         output_2 = has_adjacent_symbol(1, 1, input_rows_2)
@@ -42,10 +42,10 @@ class TestHasAdjacentSymbol:
 
     def test_detects_diagonal_symbols(self):
         """returns true if there is a number/symbol diagonally adjacent"""
-        input_rows = [["@..",".5.","..."]]
-        input_rows_2 = [["..~",".5.","..."]]
-        input_rows_3 = [["...",".5.","[.."]]
-        input_rows_4 = [["...",".5.","..5"]]
+        input_rows = ["@..",".5.","..."]
+        input_rows_2 = ["..~",".5.","..."]
+        input_rows_3 = ["...",".5.","[.."]
+        input_rows_4 = ["...",".5.","..5"]
 
         output = has_adjacent_symbol(1, 1, input_rows)
         output_2 = has_adjacent_symbol(1, 1, input_rows_2)
