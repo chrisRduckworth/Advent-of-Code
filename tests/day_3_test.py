@@ -13,13 +13,49 @@ class TestHasAdjacentSymbol:
         assert output == False
 
     def test_detects_adjacent_symbols(self):
-        pass
+        """returns true if there is an adjacent symbol"""
+        input_rows = [[".@.",".5.","..."]]
+        input_rows_2 = [["...","~5.","..."]]
+        input_rows_3 = [["...",".5.",".[."]]
+        input_rows_4 = [["...",".5a","..."]]
+
+        output = has_adjacent_symbol(1, 1, input_rows)
+        output_2 = has_adjacent_symbol(1, 1, input_rows_2)
+        output_3 = has_adjacent_symbol(1, 1, input_rows_3)
+        output_4 = has_adjacent_symbol(1, 1, input_rows_4)
+
+        assert output == True
+        assert output_2 == True
+        assert output_3 == True
+        assert output_4 == True
 
     def test_detects_adjacent_numbers(self):
-        pass
+        """returns true if there is an adjacent number (above/below)"""
+        input_rows = [[".5.",".5.","..."]]
+        input_rows_2 = [["...",".5.",".5."]]
+
+        output = has_adjacent_symbol(1, 1, input_rows)
+        output_2 = has_adjacent_symbol(1, 1, input_rows_2)
+
+        assert output == True
+        assert output_2 == True
 
     def test_detects_diagonal_symbols(self):
-        pass
+        """returns true if there is a number/symbol diagonally adjacent"""
+        input_rows = [["@..",".5.","..."]]
+        input_rows_2 = [["..~",".5.","..."]]
+        input_rows_3 = [["...",".5.","[.."]]
+        input_rows_4 = [["...",".5.","..5"]]
+
+        output = has_adjacent_symbol(1, 1, input_rows)
+        output_2 = has_adjacent_symbol(1, 1, input_rows_2)
+        output_3 = has_adjacent_symbol(1, 1, input_rows_3)
+        output_4 = has_adjacent_symbol(1, 1, input_rows_4)
+
+        assert output == True
+        assert output_2 == True
+        assert output_3 == True
+        assert output_4 == True
 
     def test_start_index_zero(self):
         pass
