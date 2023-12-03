@@ -55,3 +55,8 @@ def sum_part_numbers(schematic):
 
     return total
     
+if __name__ == "__main__":
+    with open("inputs/day_3.txt") as f:
+        schematic = f.read()
+        total = sum_part_numbers(schematic)
+        print(total)
