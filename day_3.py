@@ -55,6 +55,27 @@ def sum_part_numbers(schematic):
 
     return total
     
+"""
+give the verifactin function the full 3 rows
+also give it the index of the gear youre checking (in case there's multiple)
+check sides and find the numbers if they exist (this is all regex)
+get three characters above/below gear
+it's 0, 1, or 2 numbers 
+if it's 0 then done
+if it's 1 you can either see:
+    the beginning, in which case you can regex to find it 
+    the end, in which case you can regex to find it 
+    both, in which case find all matches for numbers on that line,
+        then find the match where the index of the gear is between start and end
+if it's 2 then you can just find them 
+"""
+
+def find_gear_ratio(index, rows):
+    pass
+
+def sum_gear_ratios(schematic):
+    pass
+
 if __name__ == "__main__":
     with open("inputs/day_3.txt") as f:
         schematic = f.read()
