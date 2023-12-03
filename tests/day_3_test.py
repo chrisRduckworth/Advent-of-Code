@@ -98,3 +98,25 @@ class TestSumPartNumbers:
         output = sum_part_numbers(schematic)
         
         assert output == 4361
+
+class TestFindGearRatio:
+    def test_returns_0_for_no_adjacent_numbers(self):
+        pass
+
+    def test_returns_0_for_one_adjacent_number(self):
+        pass
+
+    def test_returns_0_for_3_or_more_adjacent_numbers(self):
+        pass
+
+    def test_returns_gear_ratio_for_numbers_above(self):
+        pass
+
+    def test_returns_gear_ratio_for_numbers_to_side(self):
+        pass 
+
+    def test_returns_gear_ratio_for_numbers_below(self):
+        pass 
+
+    def test_returns_gear_ratio_for_numbers_mixed(self):
+        pass
