@@ -165,8 +165,17 @@ class TestFindGearRatio:
         input_rows = ["5..", "*6.", "..."]
         input_rows_2 = ["..6", "..*", "555"]
 
-        output = find_gear_ratio(2, input_rows)
+        output = find_gear_ratio(0, input_rows)
         output_2 = find_gear_ratio(2, input_rows_2)
 
         assert output == 30
         assert output_2 == 3330
+
+class TestSumGearRatios:
+    def test_sums_gear_ratios(self):
+        # it's midnight these are the only tests im writign for now
+        schematic = "467..114..\n...*......\n..35..633.\n......@...\n617*......\n.....+.58.\n..592.....\n......755.\n...$.*....\n.664.598.."
+
+        output = sum_gear_ratios(schematic)
+
+        assert output == 467835
