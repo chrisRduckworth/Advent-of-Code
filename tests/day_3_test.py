@@ -1,4 +1,4 @@
-from day_3 import has_adjacent_symbol, sum_part_numbers
+from day_3 import has_adjacent_symbol, sum_part_numbers, find_gear_ratio, sum_gear_ratios
 import pytest
 
 class TestHasAdjacentSymbol:
@@ -101,22 +101,64 @@ class TestSumPartNumbers:
 
 class TestFindGearRatio:
     def test_returns_0_for_no_adjacent_numbers(self):
-        pass
+        input_rows = ["...", ".*.", "..."]
+        
+        output = find_gear_ratio(1, input_rows)
+
+        assert output == 0
 
     def test_returns_0_for_one_adjacent_number(self):
-        pass
+        input_rows = ["...", ".*5", "..."]
+
+        output = find_gear_ratio(1, input_rows)
+
+        assert output == 0
 
     def test_returns_0_for_3_or_more_adjacent_numbers(self):
-        pass
+        input_rows = ["5.5", ".*.", ".5."]
+
+        output = find_gear_ratio(1, input_rows)
+
+        assert output == 0
 
     def test_returns_gear_ratio_for_numbers_above(self):
-        pass
+        input_rows = ["5.6", ".*.", "..."]
+        
+        output = find_gear_ratio(1, input_rows)
+
+        assert output == 30
 
     def test_returns_gear_ratio_for_numbers_to_side(self):
-        pass 
+        input_rows = ["...", "5*6", "..."]
+        
+        output = find_gear_ratio(1, input_rows)
+
+        assert output == 30
 
     def test_returns_gear_ratio_for_numbers_below(self):
-        pass 
+        input_rows = ["...", ".*.", "5.6"]
+        
+        output = find_gear_ratio(1, input_rows)
+
+        assert output == 30
 
     def test_returns_gear_ratio_for_numbers_mixed(self):
-        pass
+        input_rows = ["5..", "6*.", "..."]
+        input_rows_2 = ["5..", "6*.", "..."]
+        input_rows_3 = ["555", ".*.", ".6."]
+        input_rows_4 = ["...", ".*6", "6.."]
+        input_rows_5 = ["12345.", "..*..", ".12345"]
+        
+        output = find_gear_ratio(1, input_rows)
+        output_2 = find_gear_ratio(1, input_rows_2)
+        output_3 = find_gear_ratio(1, input_rows_3)
+        output_4 = find_gear_ratio(1, input_rows_4)
+        output_5 = find_gear_ratio(1, input_rows_5)
+
+        assert output == 30
+        assert output_2 == 30
+        assert output_3 == 3330
+        assert output_4 == 36
+        assert output_5 == 152399025
+
+        
