@@ -15,3 +15,9 @@ def sum_scratchcard_points(scratchcards):
             total += 2 ** (matches - 1)
 
     return total
+
+if __name__ == "__main__":
+    with open("inputs/day_4.txt") as f:
+        scratchcards = f.read()
+        total = sum_scratchcard_points(scratchcards)
+        print(total, "< scratchcard points")
