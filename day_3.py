@@ -71,6 +71,64 @@ if it's 2 then you can just find them
 """
 
 def find_gear_ratio(index, rows):
+    # why did i not just pad beginning/end of each row with a dot to compensate
+    # for when the thing starts at a start/end
+    numbers = []
+    if rows[1][index - 1] in "0123456789":
+        # slice or row[1] ending at index [index]
+        numbers.append(int(re.search(r"\d+$", rows[1][:index])[0]))
+    if rows[1][index + 1] in "0123456789":
+        numbers.append(int(re.search(r"^\d+", rows[1][index + 1:])[0]))
+
+    # now top/bottom 
+    top_3 = rows[0][index - 1: index + 2]
+    if top_3 == "...":
+        # do nothing
+        pass
+    elif re.search(r"\d\.\d", top_3) is not None:
+        # there are two numbers
+        # find top elft
+        numbers.append(int(re.search(r"\d+$", rows[0][:index])[0]))
+        # find top right 
+        numbers.append(int(re.search(r"^\d+", rows[0][index + 1:])[0]))
+    else:
+        # there is precisely one number:
+        # n.. nn. nnn .nn ..n 
+        if re.search(r"\.\d", top_3) is not None:
+            numbers.append(int(re.search(r"\d+", rows[0][index:])[0]))
+        elif re.search(r"\d\.", top_3) is not None:
+            numbers.append(int(re.findall(r"\d+", rows[0][:index + 1])[-1]))
+        else:
+            matches = re.finditer(r"\d+", rows[0])
+            for match in matches:
+                if match.start() < index and match.end() > index + 1:
+                    numbers.append(int(match[0]))
+                    break
+
+    bottom_3 = rows[2][index - 1: index + 2]
+    if bottom_3 == "...":
+        pass
+    elif re.search(r"\d\.\d", bottom_3) is not None:
+        numbers.append(int(re.search(r"\d+$", rows[2][:index])[0]))
+        numbers.append(int(re.search(r"^\d+", rows[2][index + 1:])[0]))
+    else:
+        if re.search(r"\.\d", bottom_3) is not None:
+            numbers.append(int(re.search(r"\d+", rows[2][index:])[0]))
+        elif re.search(r"\d\.", bottom_3) is not None:
+            numbers.append(int(re.findall(r"\d+", rows[2][:index + 1])[-1]))
+        else:
+            matches = re.finditer(r"\d+", rows[2])
+            for match in matches:
+                if match.start() < index and match.end > index + 1:
+                    numbers.append(int(match[0]))
+                    break
+    print(numbers, "< numbers")
+    if len(numbers) != 2:
+        return 0
+        
+    else:
+        return numbers[0] * numbers[1]
+    return 0
     pass
 
 def sum_gear_ratios(schematic):
