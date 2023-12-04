@@ -73,6 +73,8 @@ if it's 2 then you can just find them
 def find_gear_ratio(index, rows):
     # why did i not just pad beginning/end of each row with a dot to compensate
     # for when the thing starts at a start/end
+    rows = ["." + row + "." for row in rows]
+    index += 1
     numbers = []
     if rows[1][index - 1] in "0123456789":
         # slice or row[1] ending at index [index]
@@ -119,7 +121,7 @@ def find_gear_ratio(index, rows):
         else:
             matches = re.finditer(r"\d+", rows[2])
             for match in matches:
-                if match.start() < index and match.end > index + 1:
+                if match.start() < index and match.end() > index + 1:
                     numbers.append(int(match[0]))
                     break
     print(numbers, "< numbers")
@@ -129,13 +131,25 @@ def find_gear_ratio(index, rows):
     else:
         return numbers[0] * numbers[1]
     return 0
-    pass
 
 def sum_gear_ratios(schematic):
-    pass
+    lines = schematic.splitlines()
+    lines.insert(0, "." * len(lines[0]))
+    lines.append("." * len(lines[0]))
+
+    total = 0
+
+    for i, line in enumerate(lines):
+        gears = re.finditer(r"\*", line)
+        for gear in gears:
+            total += find_gear_ratio(gear.start(), lines[i - 1: i + 2])
+            
+    return total
 
 if __name__ == "__main__":
     with open("inputs/day_3.txt") as f:
         schematic = f.read()
         total = sum_part_numbers(schematic)
-        print(total)
+        print(total, "part numbers total")
+        gear_total = sum_gear_ratios(schematic)
+        print(gear_total, "gear total")
