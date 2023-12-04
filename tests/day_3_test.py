@@ -160,5 +160,13 @@ class TestFindGearRatio:
         assert output_3 == 3330
         assert output_4 == 36
         assert output_5 == 152399025
+    
+    def test_returns_gear_ratio_for_gears_at_end_of_line(self):
+        input_rows = ["5..", "*6.", "..."]
+        input_rows_2 = ["..6", "..*", "555"]
 
-        
+        output = find_gear_ratio(2, input_rows)
+        output_2 = find_gear_ratio(2, input_rows_2)
+
+        assert output == 30
+        assert output_2 == 3330
