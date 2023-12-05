@@ -1,4 +1,4 @@
-from day_5 import find_lowest_location_number
+from day_5 import find_lowest_location_number, find_new_value
 
 test_input = """seeds: 79 14 55 13
 
@@ -34,6 +34,23 @@ humidity-to-location map:
 60 56 37
 56 93 4"""
 
+class TestFindNewValue:
+    def test_returns_corresponding_value_in_map(self):
+        map_values = ["50 98 2", "52 50 48"]
+        in_value = 79
+        
+        out_value = find_new_value(map_values, in_value)
+
+        assert out_value == 81
+
+    def test_returns_same_value_if_not_in_map(self):
+        map_values = ["50 98 2", "52 50 48"]
+        in_value = 48
+        
+        out_value = find_new_value(map_values, in_value)
+
+        assert out_value == 48
+        
 class TestFindLowestLocationNumber:
     def test_returns_lowest_location_number_for_one_seed(self):
         almanac = "seeds: 79\n" + "\n".join(test_input.splitlines()[1:])
