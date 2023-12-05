@@ -29,3 +29,9 @@ def find_lowest_location_number(almanac):
     locations = [find_new_value(maps["humidity-to-location"], humidity) for humidity in humiditys]
 
     return min(locations)
+
+if __name__ == "__main__":
+    with open("inputs/day_5.txt") as f:
+        almanac = f.read()
+        min_location = find_lowest_location_number(almanac)
+        print(min_location, " lowest location number")
