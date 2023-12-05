@@ -58,3 +58,10 @@ class TestFindLowestLocationNumber:
         min_location = find_lowest_location_number(almanac)
     
         assert min_location == 82
+
+    def test_returns_lowest_location_number_for_multiple_seeds(self):
+        almanac = test_input
+
+        min_location = find_lowest_location_number(almanac)
+
+        assert min_location == 35

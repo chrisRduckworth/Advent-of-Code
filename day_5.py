@@ -13,10 +13,13 @@ def find_new_value(map_values, in_value):
     return out_value
 
 def find_lowest_location_number(almanac):
+    """returns the lowest location number from given seeds"""
+    # retrieve seeds and maps from input strings
     seeds = [int(seed) for seed in re.search(r"(?<=seeds: )(\d+ ?)+", almanac)[0].split(" ")]
     maps = ["seed-to-soil", "soil-to-fertilizer", "fertilizer-to-water", "water-to-light", "light-to-temperature", "temperature-to-humidity", "humidity-to-location"]
     maps = {a_map: re.search(r"(?<=" + re.escape(a_map) + r" map:\n)(\d+ \d+ \d+(?:\n)?)+", almanac)[0].splitlines() for a_map in maps}
     
+    # convert seeds to soils, fertilizers to waters, etc
     soils = [find_new_value(maps["seed-to-soil"], seed) for seed in seeds]
     fertilizers = [find_new_value(maps["soil-to-fertilizer"], soil) for soil in soils]
     waters = [find_new_value(maps["fertilizer-to-water"], fertilizer) for fertilizer in fertilizers]
@@ -24,5 +27,5 @@ def find_lowest_location_number(almanac):
     temperatures = [find_new_value(maps["light-to-temperature"], light) for light in lights]
     humiditys = [find_new_value(maps["temperature-to-humidity"], temperature) for temperature in temperatures]
     locations = [find_new_value(maps["humidity-to-location"], humidity) for humidity in humiditys]
-       
+
     return min(locations)
