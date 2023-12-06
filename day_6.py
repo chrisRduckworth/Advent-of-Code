@@ -10,3 +10,9 @@ def find_winning_products(races):
         product *= (max_button_press + 1 - minimum_button_press)
     
     return product
+
+if __name__ == "__main__":
+    with open("inputs/day_6.txt") as f:
+        races = f.read()
+        product = find_winning_products(races)
+        print(product, " product of number of winning times")
