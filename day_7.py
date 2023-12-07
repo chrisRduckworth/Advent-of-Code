@@ -5,6 +5,8 @@ def convert_hand_to_number(hand):
     cards).
     The first digit will be how high it ranks in terms of 5 of a kind
     vs 4 of a kind etc. Higher scoring hands have higher values
+    Later digits will be equal to the value of each card, starting at the
+    first
     """
     # test for various hands
     unique_cards = set(hand)
@@ -45,3 +47,9 @@ def total_winnings(games):
     hands.sort(key=convert_hand_to_number)
     winnings = sum((i + 1) * games[hand] for i, hand in enumerate(hands))
     return winnings
+
+if __name__ == "__main__":
+    with open("inputs/day_7.txt") as f:
+        games = f.read()
+        winnings = total_winnings(games)
+        print(winnings, "< total winnings")
