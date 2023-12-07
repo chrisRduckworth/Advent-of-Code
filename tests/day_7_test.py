@@ -80,14 +80,40 @@ class TestConvertHandToNumberWithJokers:
         hand_3 = "KK677"
         hand_4 = "KTJJT"
         hand_5 = "QQQJA"
+        hand_6 = "QQQJJ"
+        hand_7 = "TTT7T"
+        hand_8 = "TJTJT"
+        hand_9 = "JTJTJ"
+        hand_10 = "23456"
+        hand_11 = "62345"
+        hand_12 = "JJJJJ"
+        hand_13 = "QJJKA"
+
         
         value_1 = convert_hand_to_number_with_jokers(hand_1)
         value_2 = convert_hand_to_number_with_jokers(hand_2)
         value_3 = convert_hand_to_number_with_jokers(hand_3)
         value_4 = convert_hand_to_number_with_jokers(hand_4)
         value_5 = convert_hand_to_number_with_jokers(hand_5)
+        value_6 = convert_hand_to_number_with_jokers(hand_6)
+        value_7 = convert_hand_to_number_with_jokers(hand_7)
+        value_8 = convert_hand_to_number_with_jokers(hand_8)
+        value_9 = convert_hand_to_number_with_jokers(hand_9)
+        value_10 = convert_hand_to_number_with_jokers(hand_10)
+        value_11 = convert_hand_to_number_with_jokers(hand_11)
+        value_12 = convert_hand_to_number_with_jokers(hand_12)
+        value_13 = convert_hand_to_number_with_jokers(hand_13)
 
+        assert value_6 > value_8
+        assert value_8 > value_9
+        assert value_9 > value_12
+        assert value_12 > value_4
         assert value_4 > value_5
-        assert value_5 > value_2
-        assert value_2 > value_3
-        assert value_3 > value_1
+        assert value_5 > value_7
+        assert value_7 > value_2 
+        assert value_2 > value_13
+        assert value_13 > value_3
+        assert value_3 > value_1 
+        assert value_1 > value_11
+        assert value_11 > value_10
+        
