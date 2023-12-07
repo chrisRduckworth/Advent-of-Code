@@ -41,10 +41,13 @@ def convert_hand_to_number(hand):
 
     return int(out_value, 16)
 
-def total_winnings(games):
+def total_winnings(games, part_2=False):
     games = {game.split()[0]: int(game.split()[1]) for game in games.splitlines()}
     hands = list(games.keys())
-    hands.sort(key=convert_hand_to_number)
+    if part_2:
+        hands.sort(key=convert_hand_to_number_with_jokers)
+    else:
+        hands.sort(key=convert_hand_to_number)
     winnings = sum((i + 1) * games[hand] for i, hand in enumerate(hands))
     return winnings
 
@@ -88,3 +91,5 @@ if __name__ == "__main__":
         games = f.read()
         winnings = total_winnings(games)
         print(winnings, "< total winnings")
+        winnings_with_jokers = total_winnings(games, True)
+        print(winnings_with_jokers, "< total winnings with jokers")
