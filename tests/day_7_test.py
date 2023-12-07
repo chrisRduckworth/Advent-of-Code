@@ -42,3 +42,18 @@ class TestConvertHandToNumber:
         assert value_4 > value_1
         assert value_1 > value_11
         assert value_11 > value_10
+
+class TestTotalWinnings:
+    def test_returns_total_for_one_hand(self):
+        hands = "32T3K 765"
+
+        winnings = total_winnings(hands)
+
+        assert winnings == 765
+
+    def test_returns_total_for_multiple_hands(self):
+        hands = "32T3K 765\nT55J5 684\nKK677 28\nKTJJT 220\nQQQJA 483"
+
+        winnings = total_winnings(hands)
+        
+        assert winnings == 6440
