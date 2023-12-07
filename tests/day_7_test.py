@@ -1,4 +1,4 @@
-from day_7 import convert_hand_to_number, total_winnings
+from day_7 import convert_hand_to_number, total_winnings, convert_hand_to_number_with_jokers
 
 class TestConvertHandToNumber:
     def test_returns_a_number(self):
@@ -57,3 +57,30 @@ class TestTotalWinnings:
         winnings = total_winnings(hands)
         
         assert winnings == 6440
+
+class TestConvertHandToNumberWithJokers:
+    def test_returns_same_when_number_has_no_jokers(self):
+        hand = "32T3K"
+
+        value = convert_hand_to_number_with_jokers(hand)
+        old_value = convert_hand_to_number(hand)
+
+        assert value == old_value
+
+    def test_returns_values_adjusted_for_jokers(self):
+        hand_1 = "32T3K"
+        hand_2 = "T55J5"
+        hand_3 = "KK677"
+        hand_4 = "KTJJT"
+        hand_5 = "QQQJA"
+        
+        value_1 = convert_hand_to_number_with_jokers(hand_1)
+        value_2 = convert_hand_to_number_with_jokers(hand_2)
+        value_3 = convert_hand_to_number_with_jokers(hand_3)
+        value_4 = convert_hand_to_number_with_jokers(hand_4)
+        value_5 = convert_hand_to_number_with_jokers(hand_5)
+
+        assert value_4 > value_5
+        assert value_5 > value_2
+        assert value_2 > value_3
+        assert value_3 > value_1
