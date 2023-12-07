@@ -2,11 +2,11 @@ from day_7 import convert_hand_to_number, total_winnings
 
 class TestConvertHandToNumber:
     def test_returns_a_number(self):
-        hand = "32T3k"
+        hand = "32T3K"
 
-        value = convert_hand_to_number(hand_1)
+        value = convert_hand_to_number(hand)
         
-        assert isintsnace(value, int)
+        assert isinstance(value, int)
 
     def test_numbers_with_higher_score_return_higher_number(self):
         hand_1 = "32T3K"
