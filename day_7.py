@@ -36,9 +36,12 @@ def convert_hand_to_number(hand):
 
     for card in hand:
         out_value += card_hex_values[card]
-    print(out_value)
 
     return int(out_value, 16)
 
-def total_winnings(hands):
-    pass
+def total_winnings(games):
+    games = {game.split()[0]: int(game.split()[1]) for game in games.splitlines()}
+    hands = list(games.keys())
+    hands.sort(key=convert_hand_to_number)
+    winnings = sum((i + 1) * games[hand] for i, hand in enumerate(hands))
+    return winnings
