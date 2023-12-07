@@ -54,7 +54,10 @@ def total_winnings(games, part_2=False):
 def convert_hand_to_number_with_jokers(hand):
     number_of_jokers = hand.count("J")
     unique_cards = set(hand.replace("J", ""))
-    highest_number_of_single_card = max([hand.count(c) for c in unique_cards])
+    if hand == "JJJJJ":
+        highest_number_of_single_card = 0
+    else:
+        highest_number_of_single_card = max([hand.count(c) for c in unique_cards])
     # now account for jokers 
     highest_number_of_single_card += number_of_jokers
 
