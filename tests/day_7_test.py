@@ -58,6 +58,13 @@ class TestTotalWinnings:
         
         assert winnings == 6440
 
+    def test_returns_total_for_hands_with_jokers(self):
+        hands = "32T3K 765\nT55J5 684\nKK677 28\nKTJJT 220\nQQQJA 483"
+
+        winnings = total_winnings(hands, True)
+        
+        assert winnings == 5905
+
 class TestConvertHandToNumberWithJokers:
     def test_returns_same_when_number_has_no_jokers(self):
         hand = "32T3K"
