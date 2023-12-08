@@ -18,3 +18,8 @@ def find_steps(maps):
         
     return i
 
+if __name__ == "__main__":
+    with open("inputs/day_8.txt") as f:
+        maps = f.read()
+        steps = find_steps(maps)
+        print(steps, "< steps")
