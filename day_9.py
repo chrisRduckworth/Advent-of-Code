@@ -20,6 +20,16 @@ def sum_extrapolated_values(report):
     next_values = [find_next_value(sub) for sub in subsequences]
     return sum(next_values)
 
+def find_zero_value(subsequences):
+    """returns zero-th value of the sequence"""
+    subsequences[-1].insert(0, subsequences[-1][0])
+    for i in range(len(subsequences) - 2, -1, -1):
+        subsequences[i].insert(0, subsequences[i][0] - subsequences[i + 1][0])
+    return subsequences[0][0]
+
+def sum_zero_values(report):
+    pass
+
 if __name__ == "__main__":
     with open("inputs/day_9.txt") as f:
         report = f.read()
