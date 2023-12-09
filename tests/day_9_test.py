@@ -89,6 +89,13 @@ class TestSumExtrapolatedValues:
         sums = sum_extrapolated_values(sequences)
 
         assert sums == 114
+
+    def test_works_in_reverse(self):
+        sequences = "0 3 6 9 12 15\n1 3 6 10 15 21\n10 13 16 21 30 45"
+
+        sums = sum_extrapolated_values(sequences, zeros=True)
+
+        assert sums == 2
         
 class TestFindZeroValue:
     def test_returns_number_for_constant(self):
@@ -124,3 +131,4 @@ class TestFindZeroValue:
 
         assert zero_1 == 0
         assert zero_2 == 5
+
