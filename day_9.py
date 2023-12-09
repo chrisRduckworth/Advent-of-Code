@@ -19,3 +19,9 @@ def sum_extrapolated_values(report):
     subsequences = [find_subsequences(seq) for seq in sequences]
     next_values = [find_next_value(sub) for sub in subsequences]
     return sum(next_values)
+
+if __name__ == "__main__":
+    with open("inputs/day_9.txt") as f:
+        report = f.read()
+        sums = sum_extrapolated_values(report)
+        print(sums, "< sum of sum of extrapolated values")
