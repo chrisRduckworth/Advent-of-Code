@@ -1,4 +1,4 @@
-from day_9 import find_subsequences, find_next_value, sum_extrapolated_values
+from day_9 import find_subsequences, find_next_value, sum_extrapolated_values, find_zero_value
 
 class TestFindSubsequences:
     def test_returns_sequence_for_constant(self):
@@ -90,4 +90,37 @@ class TestSumExtrapolatedValues:
 
         assert sums == 114
         
-        
+class TestFindZeroValue:
+    def test_returns_number_for_constant(self):
+        subsequences = [[3, 3, 3, 3]]
+
+        zero = find_zero_value(subsequences)
+
+        assert zero == 3
+    
+    def test_returns_zero_number_for_linear(self):
+        subsequences = [[0, 3, 6, 9, 12, 15], [3, 3, 3, 3, 3]]
+
+        zero = find_zero_value(subsequences)
+
+        assert zero == -3
+
+    def test_returns_zero_number(self):
+        subsequences_1 = [
+            [1, 3, 6, 10, 15, 21],
+            [2, 3, 4, 5, 6],
+            [1, 1, 1, 1]
+            ]
+
+        subsequences_2 = [
+            [10, 13, 16, 21, 30, 45],
+            [3, 3, 5, 9, 15],
+            [0, 2, 4, 6],
+            [2, 2, 2]
+        ]
+
+        zero_1 = find_zero_value(subsequences_1)
+        zero_2 = find_zero_value(subsequences_2)
+
+        assert zero_1 == 0
+        assert zero_2 == 5
