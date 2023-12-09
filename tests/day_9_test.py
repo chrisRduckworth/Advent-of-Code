@@ -68,3 +68,26 @@ class TestFindNextValue:
 
         assert next_value_1 == 28
         assert next_value_2 == 68
+
+class TestSumExtrapolatedValues:
+    def test_returns_sum_of_single_sequence(self):
+        sequences_1 = "3   3   3   3  3  3"
+        sequences_2 = "0   3   6   9  12  15"
+        sequences_3 = "10 13 16 21 30 45"
+
+        sums_1 = sum_extrapolated_values(sequences_1)
+        sums_2 = sum_extrapolated_values(sequences_2)
+        sums_3 = sum_extrapolated_values(sequences_3)
+
+        assert sums_1 == 3
+        assert sums_2 == 18
+        assert sums_3 == 68
+        
+    def test_returns_sum_of_sequences(self):
+        sequences = "0 3 6 9 12 15\n1 3 6 10 15 21\n10 13 16 21 30 45"
+
+        sums = sum_extrapolated_values(sequences)
+
+        assert sums == 114
+        
+        
