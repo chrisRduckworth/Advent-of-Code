@@ -15,4 +15,7 @@ def find_next_value(subsequences):
     return subsequences[0][-1]
 
 def sum_extrapolated_values(report):
-    pass
+    sequences = [[int(n) for n in seq.split()] for seq in report.splitlines()]
+    subsequences = [find_subsequences(seq) for seq in sequences]
+    next_values = [find_next_value(sub) for sub in subsequences]
+    return sum(next_values)
