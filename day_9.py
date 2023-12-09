@@ -34,4 +34,6 @@ if __name__ == "__main__":
     with open("inputs/day_9.txt") as f:
         report = f.read()
         sums = sum_extrapolated_values(report)
-        print(sums, "< sum of sum of extrapolated values")
+        print(sums, "< sum of extrapolated values")
+        sums_of_zeros = sum_extrapolated_values(report, zeros=True)
+        print(sums_of_zeros, "< sum of extrapolated zeros")
