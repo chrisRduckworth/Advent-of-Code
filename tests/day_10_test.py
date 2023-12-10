@@ -1,4 +1,4 @@
-from day_10 import increment_position, find_start_coordinates, find_route, furthest_point
+from day_10 import increment_position, find_start_coordinates, find_route, furthest_point, enclosed_tiles, mark_adjacent_tiles
 import pytest
 
 class TestIncrementPosition:
@@ -62,3 +62,55 @@ LJ..."""
         
         assert furthest_point(maze, (0,1)) == 4
         assert furthest_point(maze_2, (0,1)) == 8
+
+class TestMarkAdjacentTiles:
+    def test_marks_adjacent_tiles(self):
+        maze = ["...", ".-.", "..."]
+        
+        north = mark_adjacent_tiles(maze, (1,1), "N")
+        south = mark_adjacent_tiles(maze, (1,1), "S")
+        east = mark_adjacent_tiles(maze, (1,1), "E")
+        west = mark_adjacent_tiles(maze, (1,1), "W")
+
+        expected_north = ["...", "I-O", "..."]
+        expected_south = ["...", "O-I", "..."]
+        expected_east = [".I.", ".-.", ".O."]
+        expected_west = [".O.", ".-.", ".I."]
+
+        assert north == expected_north
+        assert south == expected_south
+        assert east == expected_east
+        assert west == expected_west
+
+    def test_ignores_pipes(self):
+        maze = [".|.", "F-J", ".-."]
+        
+        north = mark_adjacent_tiles(maze, (1,1), "N")
+        south = mark_adjacent_tiles(maze, (1,1), "S")
+        east = mark_adjacent_tiles(maze, (1,1), "E")
+        west = mark_adjacent_tiles(maze, (1,1), "W")
+
+        assert north == maze
+        assert south == maze
+        assert east == maze
+        assert west == maze
+
+    def test_works_at_edges(self):
+        maze = ["-..", "..."]
+
+        north = mark_adjacent_tiles(maze, (0,0), "N")
+        east = mark_adjacent_tiles(maze, (0,0), "E")
+
+        expected_north = ["-O.", "..."]
+        expected_east = ["-..", "O.."]
+
+        assert north == expected_north
+        assert east == expected_east
+
+    def test_does_not_mutate_maze(self):
+        maze = ["...", ".-.", "..."]
+
+        mark_adjacent_tiles(maze, (1,1), "N")
+
+        assert maze == ["...", ".-.", "..."]
+
