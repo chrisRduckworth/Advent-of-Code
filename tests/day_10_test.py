@@ -151,3 +151,8 @@ L7JLJL-JLJLJL--JLJ.L"""
         assert enclosed_tiles(maze, (0,1)) == 4
         assert enclosed_tiles(maze_2, (0,1)) == 8
         assert enclosed_tiles(maze_3, (0,1)) == 10
+
+    def test_fills_in_empty_spaces(self):
+        maze = "S---7\n|...|\n|...|\n|...|\nL---J"
+
+        assert enclosed_tiles(maze, (0,1)) == 9
