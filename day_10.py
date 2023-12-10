@@ -33,17 +33,24 @@ def find_start_coordinates(maze):
         if "S" in row:
             return (row.find("S"), i)
 
-def furthest_point(maze):
-    maze = maze.splitlines()
+def find_route(maze, initial_movement):
     start_position = find_start_coordinates(maze)
     movement_directions = {(0,1): "N", (0, -1): "S", (1, 0): "W", (-1, 0): "E"}
-    # for my input start connects to south and west. We choose south
-    movement = (0, 1)
-    route = [start_position, (start_position[0], start_position[1] + 1)]
+    route = [start_position, (start_position[0] + initial_movement[0], start_position[1] + initial_movement[1])]
+    movement = initial_movement
     while maze[route[-1][1]][route[-1][0]] != "S":
         movement = increment_position(maze[route[-1][1]][route[-1][0]], movement_directions[movement])
         route.append((route[-1][0] + movement[0], route[-1][1] + movement[1]))
-    return len(route[:-1]) / 2
+    return route[:-1]
+
+def furthest_point(maze):
+    maze = maze.splitlines()
+    # for my input, start connects to south and west. We choose south
+    route = find_route(maze, (0,1))
+    return len(route) / 2
+
+# stuff on the left hand is inside the loop, stuff on your right hand is outside
+
 
 if __name__ == "__main__":
     with open("inputs/day_10.txt") as f:

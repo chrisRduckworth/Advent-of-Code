@@ -1,4 +1,4 @@
-from day_10 import increment_position, find_start_coordinates, furthest_point
+from day_10 import increment_position, find_start_coordinates, find_route, furthest_point
 import pytest
 
 class TestIncrementPosition:
@@ -40,6 +40,12 @@ class TestFindStartCoordinates:
         start_coords = find_start_coordinates(maze)
 
         assert start_coords == (1, 1)
+
+class TestFindRoute:
+    def test_finds_route(self):
+        maze = ["-L|F7", "7S-7|", "L|7||", "-L-J|", "L|-JF"]
+        expected_route = [(1,1), (1,2), (1,3), (2,3), (3,3), (3,2), (3,1), (2,1)]
+        assert find_route(maze, (0,1)) == expected_route
 
 class TestFurthestPoints:
     def test_returns_distance_to_furthest_point(self):
