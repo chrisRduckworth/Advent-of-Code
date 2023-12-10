@@ -48,6 +48,33 @@ def furthest_point(maze, initial_movement):
     route = find_route(maze, initial_movement)
     return len(route) / 2
 
+def mark_adjacent_tiles(maze, position, facing):
+    """marks adjacent tiles I or O if they're inside/outside"""
+    # pad maze for when the position is at the edge
+    x, y = (position[0] + 1, position[1] + 1)
+    padded_maze = ["." * (len(maze[0]) + 2), *[f".{row}." for row in maze], "." * (len(maze[0]) + 2)]
+    if facing == "N":
+        if padded_maze[y][x-1] not in "FJ7L|-":
+            padded_maze[y] = padded_maze[y][:x-1] + "I" + padded_maze[y][x:]
+        if padded_maze[y][x+1] not in "FJ7L|-":
+            padded_maze[y] = padded_maze[y][:x+1] + "O" + padded_maze[y][x+2:]
+    elif facing == "E":
+        if padded_maze[y-1][x] not in "FJ7L|-":
+            padded_maze[y-1] = padded_maze[y-1][:x] + "I" + padded_maze[y-1][x+1:]
+        if padded_maze[y+1][x] not in "FJ7L|-":
+            padded_maze[y+1] = padded_maze[y+1][:x] + "O" + padded_maze[y+1][x+1:]
+    elif facing == "S":
+        if padded_maze[y][x-1] not in "FJ7L|-":
+            padded_maze[y] = padded_maze[y][:x-1] + "O" + padded_maze[y][x:]
+        if padded_maze[y][x+1] not in "FJ7L|-":
+            padded_maze[y] = padded_maze[y][:x+1] + "I" + padded_maze[y][x+2:]
+    elif facing == "W":
+        if padded_maze[y-1][x] not in "FJ7L|-":
+            padded_maze[y-1] = padded_maze[y-1][:x] + "O" + padded_maze[y-1][x+1:]
+        if padded_maze[y+1][x] not in "FJ7L|-":
+            padded_maze[y+1] = padded_maze[y+1][:x] + "I" + padded_maze[y+1][x+1:]
+    return [row[1:-1] for row in padded_maze[1:-1]]
+
 # stuff on the left hand is inside the loop, stuff on your right hand is outside
 def enclosed_tiles(maze, initial_movement):
     maze = maze.splitlines()
