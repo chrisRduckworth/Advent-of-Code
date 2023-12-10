@@ -1,4 +1,4 @@
-from day_10 import increment_position
+from day_10 import increment_position, find_start_coordinates
 import pytest
 
 class TestIncrementPosition:
@@ -32,3 +32,11 @@ class TestIncrementPosition:
             increment_position("-", "S")
         assert exc_info.type is ValueError
         assert exc_info.value.args[0] == "invalid direction"
+
+class TestFindStartCoordinates:
+    def test_finds_start_coordinates(self):
+        maze = [".....", ".S-7.", ".|.|.", ".L-J.", "....."]
+
+        start_coords = find_start_coordinates(maze)
+
+        assert start_coords == (1, 1)
