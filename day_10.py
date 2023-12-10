@@ -1,3 +1,5 @@
+import re
+
 def increment_position(pipe, direction):
     """returns an increment for the coords"""
     if pipe not in "|-LJ7F":
@@ -110,6 +112,12 @@ def enclosed_tiles(maze, initial_movement):
         facing = facing_changes[facing_change]
         maze = mark_adjacent_tiles(maze, position, facing)
         
+    # now we need to fill the gaps with I 
+    for i, row in enumerate(maze):
+        row = re.sub(r"(?<=I)\.+", lambda m: "I" * len(m[0]), row)
+        row = re.sub(r"\.+(?=I)", lambda m: "I" * len(m[0]), row)
+        maze[i] = row
+    
     return "".join(maze).count("I")
 
 
@@ -119,3 +127,5 @@ if __name__ == "__main__":
         # for my input, start connects to south and west. We choose south
         distance_to_furthest_point = furthest_point(maze, (0,1))
         print(distance_to_furthest_point, "< distance to furthest point")
+        count_enclosed_tiles = enclosed_tiles(maze, (0,1))
+        print(count_enclosed_tiles, "< number of enclosed tiles")
