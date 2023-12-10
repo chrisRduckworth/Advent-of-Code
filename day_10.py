@@ -27,5 +27,14 @@ def increment_position(pipe, direction):
             raise ValueError("invalid direction")
         return (0, 1) if direction == "E" else (1, 0)
 
+def find_start_coordinates(maze):
+    """finds starting coordinates of the maze"""
+    for i, row in enumerate(maze):
+        if "S" in row:
+            return (row.find("S"), i)
+
 def furthest_point(maze):
+    maze = maze.splitlines()
+    start_position = find_start_coordinates(maze)
     pass
+
