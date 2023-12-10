@@ -43,17 +43,20 @@ def find_route(maze, initial_movement):
         route.append((route[-1][0] + movement[0], route[-1][1] + movement[1]))
     return route[:-1]
 
-def furthest_point(maze):
+def furthest_point(maze, initial_movement):
     maze = maze.splitlines()
-    # for my input, start connects to south and west. We choose south
-    route = find_route(maze, (0,1))
+    route = find_route(maze, initial_movement)
     return len(route) / 2
 
 # stuff on the left hand is inside the loop, stuff on your right hand is outside
+def enclosed_tiles(maze, initial_movement):
+    maze = maze.splitlines()
+    route = find_route(maze, initial_movement)
 
 
 if __name__ == "__main__":
     with open("inputs/day_10.txt") as f:
         maze = f.read()
-        distance_to_furthest_point = furthest_point(maze)
+        # for my input, start connects to south and west. We choose south
+        distance_to_furthest_point = furthest_point(maze, (0,1))
         print(distance_to_furthest_point, "< distance to furthest point")

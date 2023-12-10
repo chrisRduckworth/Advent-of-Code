@@ -60,5 +60,5 @@ SJ.L7
 |F--J
 LJ..."""
         
-        assert furthest_point(maze) == 4
-        assert furthest_point(maze_2) == 8
+        assert furthest_point(maze, (0,1)) == 4
+        assert furthest_point(maze_2, (0,1)) == 8
