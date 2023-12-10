@@ -54,31 +54,63 @@ def mark_adjacent_tiles(maze, position, facing):
     x, y = (position[0] + 1, position[1] + 1)
     padded_maze = ["." * (len(maze[0]) + 2), *[f".{row}." for row in maze], "." * (len(maze[0]) + 2)]
     if facing == "N":
-        if padded_maze[y][x-1] not in "FJ7L|-":
+        if padded_maze[y][x-1] not in "FJ7L|-S":
             padded_maze[y] = padded_maze[y][:x-1] + "I" + padded_maze[y][x:]
-        if padded_maze[y][x+1] not in "FJ7L|-":
+        if padded_maze[y][x+1] not in "FJ7L|-S":
             padded_maze[y] = padded_maze[y][:x+1] + "O" + padded_maze[y][x+2:]
     elif facing == "E":
-        if padded_maze[y-1][x] not in "FJ7L|-":
+        if padded_maze[y-1][x] not in "FJ7L|-S":
             padded_maze[y-1] = padded_maze[y-1][:x] + "I" + padded_maze[y-1][x+1:]
-        if padded_maze[y+1][x] not in "FJ7L|-":
+        if padded_maze[y+1][x] not in "FJ7L|-S":
             padded_maze[y+1] = padded_maze[y+1][:x] + "O" + padded_maze[y+1][x+1:]
     elif facing == "S":
-        if padded_maze[y][x-1] not in "FJ7L|-":
+        if padded_maze[y][x-1] not in "FJ7L|-S":
             padded_maze[y] = padded_maze[y][:x-1] + "O" + padded_maze[y][x:]
-        if padded_maze[y][x+1] not in "FJ7L|-":
+        if padded_maze[y][x+1] not in "FJ7L|-S":
             padded_maze[y] = padded_maze[y][:x+1] + "I" + padded_maze[y][x+2:]
     elif facing == "W":
-        if padded_maze[y-1][x] not in "FJ7L|-":
+        if padded_maze[y-1][x] not in "FJ7L|-S":
             padded_maze[y-1] = padded_maze[y-1][:x] + "O" + padded_maze[y-1][x+1:]
-        if padded_maze[y+1][x] not in "FJ7L|-":
+        if padded_maze[y+1][x] not in "FJ7L|-S":
             padded_maze[y+1] = padded_maze[y+1][:x] + "I" + padded_maze[y+1][x+1:]
     return [row[1:-1] for row in padded_maze[1:-1]]
 
-# stuff on the left hand is inside the loop, stuff on your right hand is outside
 def enclosed_tiles(maze, initial_movement):
     maze = maze.splitlines()
     route = find_route(maze, initial_movement)
+    maze = ["".join(char if (x,y) in route else "." for x, char in enumerate(row))for y, row in enumerate(maze)]
+    # starting position will be first point on top row in the route
+    # this must be "F"
+    # by turning "left" and travelling anticlockwise, everything on the right
+    # of our route will be outside, and everything on the left will be inside
+    for y, row in enumerate(maze):
+        if row != "." * len(maze[0]):
+            for x, char in enumerate(row):
+                if char != ".":
+                    start_position = (x, y)
+                    break
+            break
+    
+    start_index = route.index(start_position)
+    facing = "W"
+    
+    # check if we're moving anticlockwise or clockwise:
+    if (start_position[1] - route[start_index + 1][1]) == 0:
+        # we are moving clockwise, so right hand is on the inside
+        facing_changes = {(0,1): "N", (0, -1): "S", (1, 0): "W", (-1, 0): "E"}
+    else:
+        # we are moving anticlockwise, so left hand is inside
+        facing_changes = {(0,1): "S", (0, -1): "N", (1, 0): "E", (-1, 0): "W"}
+        
+    for i in range (start_index, start_index + len(route)):
+        index = i % len(route)
+        position = route[index]
+        maze = mark_adjacent_tiles(maze, position, facing)
+        facing_change = (route[(index + 1) % len(route)][0] - position[0], route[(index + 1) % len(route)][1] - position[1])
+        facing = facing_changes[facing_change]
+        maze = mark_adjacent_tiles(maze, position, facing)
+        
+    return "".join(maze).count("I")
 
 
 if __name__ == "__main__":
