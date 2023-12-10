@@ -26,3 +26,9 @@ class TestIncrementPosition:
             increment_position(".", "S")
         assert exc_info.type is ValueError
         assert exc_info.value.args[0] == "input must be pipe"
+
+    def test_raises_error_if_given_invalid_direction(self):
+        with pytest.raises(ValueError) as exc_info:
+            increment_position("-", "S")
+        assert exc_info.type is ValueError
+        assert exc_info.value.args[0] == "invalid direction"
