@@ -78,7 +78,7 @@ class TestSumShortestDistance:
         distances = sum_shortest_distances(image)
 
         assert distances == 6
-
+        
     def test_returns_sum_of_distances(self):
         image = """...#......
 .......#..
@@ -94,6 +94,36 @@ class TestSumShortestDistance:
         distances = sum_shortest_distances(image)
 
         assert distances == 374
+
+    def test_accepts_space_size_argument(self):
+        image = "..#\n...\n#.."
+
+        distances = sum_shortest_distances(image, 9)
+
+        assert distances == 22
+        
+        distances = sum_shortest_distances(image, 99)
+
+        assert distances == 202
+        
+        image = """...#......
+.......#..
+#.........
+..........
+......#...
+.#........
+.........#
+..........
+.......#..
+#...#....."""
+        distances = sum_shortest_distances(image, 9)
+
+        assert distances == 1030
+
+        distances = sum_shortest_distances(image, 99)
+
+        assert distances == 8410
+
 class TestFindDistance:
     def test_returns_distance_with_no_spaces(self):
         image = ["#..", "...", "..#"]
