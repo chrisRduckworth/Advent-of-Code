@@ -1,18 +1,53 @@
 from day_11 import expand_space, sum_shortest_distances
 
 class TestExpandSpace:
-    def returns_input_if_no_empty_space(self):
+    def test_returns_input_if_no_empty_space(self):
         image = ["#..", ".#.", "..#"]
 
         expanded_space = expand_space(image)
 
         assert expanded_space == ["#..", ".#.", "..#"]
 
-    def expands_rows(self):
-        pass
+    def test_expands_rows(self):
+        image = ["...", "###", "..."]
 
-    def expands_columns(self):
-        pass
+        expanded_space = expand_space(image)
 
-    def expands_rows_and_columns(self):
+        assert expanded_space == ["...", "...", "###", "...", "..."]
+
+    def test_expands_columns(self):
+        image = [".#.", ".#.", ".#."]
+
+        expanded_space = expand_space(image)
+        
+        assert expanded_space == ["..#..", "..#..", "..#.."]
+
+    def test_expands_rows_and_columns(self):
+        image = """...#......
+.......#..
+#.........
+..........
+......#...
+.#........
+.........#
+..........
+.......#..
+#...#.....""".splitlines()
+
+        expected_image = """....#........
+.........#...
+#............
+.............
+.............
+........#....
+.#...........
+............#
+.............
+.............
+.........#...
+#....#.......""".splitlines()
+
+        expanded_space = expand_space(image)
+
+        assert expanded_space == expected_image
         pass
