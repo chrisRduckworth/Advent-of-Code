@@ -51,6 +51,13 @@ class TestExpandSpace:
 
         assert expanded_space == expected_image
 
+    def test_accepts_char_argument(self):
+        image = ["...", ".#.", "..."]
+
+        expanded_space = expand_space(image, "@")
+
+        assert expanded_space == ["@@@@@", "@..@.", "@.#@.", "@@@@@", "@..@."]
+
 class TestSumShortestDistance:
     def test_returns_zero_for_no_or_one_galaxy(self):
         image = "...\n...\n..."
