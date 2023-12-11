@@ -7,7 +7,20 @@ def expand_space(image, char="."):
             image = [row[:i] + char + row[i:] for row in image]
     return image
 
-def sum_shortest_distances(image):
+def find_distance(image, space_size, galaxy_1, galaxy_2):
+    change_x = abs(galaxy_1[0] - galaxy_2[0])
+    change_y = abs(galaxy_1[1] - galaxy_2[1])
+
+    start_galaxy_x = min(galaxy_1, galaxy_2, key=lambda x: x[0])
+    start_galaxy_y = min(galaxy_1, galaxy_2, key=lambda x: x[1])
+
+    x_string = image[start_galaxy_x[1]][start_galaxy_x[0] + 1: start_galaxy_x[0] + change_x]
+    rows = image[start_galaxy_y[1]: start_galaxy_y[1] + change_y + 1]
+    y_string = "".join(row[start_galaxy_x[0] + change_x] for row in rows)
+    shortest_path = x_string + y_string
+    if change_x == 0:
+        return len(shortest_path) - 1 + (space_size - 1) * (shortest_path.count("@"))
+    return len(shortest_path) + (space_size - 1) * (shortest_path.count("@"))
     image = image.splitlines()
     image = expand_space(image)
 
