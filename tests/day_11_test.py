@@ -50,4 +50,40 @@ class TestExpandSpace:
         expanded_space = expand_space(image)
 
         assert expanded_space == expected_image
-        pass
+
+class TestSumShortestDistance:
+    def test_returns_zero_for_no_or_one_galaxy(self):
+        image = "...\n...\n..."
+
+        distances = sum_shortest_distances(image)
+
+        assert distances == 0
+
+        image = "...\n.#.\n..."
+
+        distances = sum_shortest_distances(image)
+
+        assert distances == 0
+
+    def test_returns_distance_for_two_galaxies(self):
+        image = "..#\n...\n#.."
+
+        distances = sum_shortest_distances(image)
+
+        assert distances == 6
+
+    def test_returns_sum_of_distances(self):
+        image = """...#......
+.......#..
+#.........
+..........
+......#...
+.#........
+.........#
+..........
+.......#..
+#...#....."""
+        
+        distances = sum_shortest_distances(image)
+
+        assert distances == 374
