@@ -21,8 +21,10 @@ def find_distance(image, space_size, galaxy_1, galaxy_2):
     if change_x == 0:
         return len(shortest_path) - 1 + (space_size - 1) * (shortest_path.count("@"))
     return len(shortest_path) + (space_size - 1) * (shortest_path.count("@"))
+
+def sum_shortest_distances(image, space_size = 1):
     image = image.splitlines()
-    image = expand_space(image)
+    image = expand_space(image, "@")
 
     galaxies = []
     for y, row in enumerate(image):
@@ -33,7 +35,7 @@ def find_distance(image, space_size, galaxy_1, galaxy_2):
     total_distance = 0
     for i, galaxy in enumerate(galaxies):
         for end_galaxy in galaxies[i+1:]:
-            total_distance += abs(galaxy[0] - end_galaxy[0]) + abs(galaxy[1] - end_galaxy[1])
+            total_distance += find_distance(image, space_size, galaxy, end_galaxy)
 
     return total_distance
 
