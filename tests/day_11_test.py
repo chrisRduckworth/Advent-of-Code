@@ -1,4 +1,4 @@
-from day_11 import expand_space, sum_shortest_distances
+from day_11 import expand_space, sum_shortest_distances, find_distance
 
 class TestExpandSpace:
     def test_returns_input_if_no_empty_space(self):
@@ -94,3 +94,59 @@ class TestSumShortestDistance:
         distances = sum_shortest_distances(image)
 
         assert distances == 374
+class TestFindDistance:
+    def test_returns_distance_with_no_spaces(self):
+        image = ["#..", "...", "..#"]
+        
+        distance = find_distance(image, 1, (0,0), (2,2))
+         
+        assert distance == 4
+        
+        image = ["..#","...","#.."]
+         
+        distance = find_distance(image, 1, (2,0), (0,2))
+         
+        assert distance == 4
+
+    def test_returns_distances_in_straight_lines(self):
+        image = ["#...#", ".....", "....."]
+
+        distance = find_distance(image, 1, (0,0), (4, 0))
+
+        assert distance == 4
+
+        image = ["#...", "....", "....", "#..."]
+
+        distance = find_distance(image, 1, (0,0), (0,3))
+
+        assert distance == 3
+
+    def test_returns_distance_with_spaces(self):
+        image = ["#..","...","..#"]
+        image = expand_space(image, "@")
+
+        distance = find_distance(image, 10, (0,0), (3,3))
+        
+        assert distance == 24
+
+        image = ["..#","...","#.."]
+        image = expand_space(image, "@")
+
+        distance = find_distance(image, 10, (3,0), (0,3))
+        
+        assert distance == 24
+
+    def test_returns_distance_with_spaces_straight_lines(self):
+        image = ["#...#", ".....", "....."]
+        image = expand_space(image, "@")
+
+        distance = find_distance(image, 10, (0,0), (7, 0))
+
+        assert distance == 34
+
+        image = ["#...", "....", "....", "#..."]
+        image = expand_space(image, "@")
+
+        distance = find_distance(image, 10, (0,0), (0,4))
+
+        assert distance == 22
