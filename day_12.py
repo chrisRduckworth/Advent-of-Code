@@ -31,4 +31,15 @@ def sum_possibilities(springs):
     # instead of actually calculating how many possibilities for each,
     # lets just make a bit list of all possible combinations 
     # and filter them
-    pass
+    springs = springs.splitlines()
+    springs = [[row.split()[0], tuple(int(n) for n in row.split()[1].split(","))] for row in springs]
+    spring_lengths = set(len(spring[0]) for spring in springs)
+    
+    all_springs = {length: create_all_springs(length) for length in spring_lengths}
+
+    total_possibilities = 0
+    for spring in springs:
+        possible_springs = filter_matching_springs(spring[0], all_springs[len(spring[0])])
+        possible_springs = filter_broken_springs(spring[1], possible_springs)
+        total_possibilities += len(possible_springs)
+    return total_possibilities
