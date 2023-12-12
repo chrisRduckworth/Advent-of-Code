@@ -50,6 +50,31 @@ def is_valid_possibility(spring, damaged_tuple):
     test_regex = r"^(\.|\?|^)+" + r"(\.|\?)+".join(damaged_regexs) + r"(\.|\?|$)+$"
     return re.search(test_regex, spring) is not None
 
+
+def find_possibilities(spring, damaged_tuple):
+    print(spring)
+    """recursively finds the total number of possibilities for a given spring"""
+    if spring.count("?") == 0:
+        damaged_springs_lengths = tuple(len(s) for s in re.findall(r"#+", spring))
+        if damaged_springs_lengths == damaged_tuple:
+            return 1 
+        return 0
+        
+    with_broken = spring.replace("?", "#", 1)
+    broken_valid = is_valid_possibility(with_broken, damaged_tuple)
+    with_ok = spring.replace("?", ".", 1)
+    ok_valid = is_valid_possibility(with_ok, damaged_tuple)
+    if broken_valid:
+        if ok_valid:
+            return find_possibilities(with_broken, damaged_tuple) + find_possibilities(with_ok, damaged_tuple)
+        else:
+            return find_possibilities(with_broken, damaged_tuple)
+    else:
+        if ok_valid:
+            return find_possibilities(with_ok, damaged_tuple)
+    
+    return 0 
+
 if __name__ == "__main__":
     with open("inputs/day_12.txt") as f:
         springs = f.read()
