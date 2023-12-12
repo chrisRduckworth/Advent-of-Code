@@ -1,4 +1,4 @@
-from day_12 import create_all_springs, filter_matching_springs, sum_possibilities
+from day_12 import create_all_springs, filter_matching_springs, filter_broken_springs, sum_possibilities
 
 class TestCreateAllSprings:
     def test_returns_all_possible_springs(self):
@@ -35,3 +35,22 @@ class TestFilterMatchingSprings:
 
         assert len(matching_springs) == 4
         assert all(s[1] == "." for s in matching_springs)
+
+class TestFilterBrokenSprings:
+    def test_returns_no_springs_if_none_match(self):
+        possible_springs = create_all_springs(2)
+        spring = ".."
+        matching_springs = filter_matching_springs(spring, possible_springs)
+
+        valid_springs = filter_broken_springs((1), possible_springs)
+
+        assert valid_springs == []
+
+    def test_returns_list_of_springs_that_are_valid(self):
+        possible_springs = create_all_springs(12)
+        spring = "?###????????"
+        matching_springs = filter_matching_springs(spring, possible_springs)
+
+        valid_springs = filter_broken_springs((3,2,1), matching_springs)
+
+        assert len(valid_springs) == 10
