@@ -1,4 +1,4 @@
-from day_12 import create_all_springs, filter_matching_springs, filter_broken_springs, sum_possibilities
+from day_12 import create_all_springs, filter_matching_springs, filter_broken_springs, sum_possibilities, is_valid_possibility, find_possibilities
 
 class TestCreateAllSprings:
     def test_returns_all_possible_springs(self):
@@ -74,3 +74,23 @@ class TestSumPossibilities:
         possibilities = sum_possibilities(springs)
 
         assert possibilities == 21
+class TestIsValidPossibility:
+    def test_returns_false_if_spring_is_not_possible(self):
+        spring = "?.."
+        damaged_tuple = (1,1)
+        
+        assert is_valid_possibility(spring, damaged_tuple) == False
+
+    def test_returns_true_if_spring_is_possible(self):
+        spring = "??.?"
+        spring_2 = "???.###????.###????.###????.###????.###"
+        damaged_tuple = (1,1)
+        damaged_tuple_2 = (2,)
+        damaged_tuple_3 = (1,)
+        damaged_tuple_4 = (1,1,3,1,1,3,1,1,3,1,1,3,1,1,3)
+
+        assert is_valid_possibility(spring, damaged_tuple)
+        assert is_valid_possibility(spring, damaged_tuple_2)
+        assert is_valid_possibility(spring, damaged_tuple_3)
+        assert is_valid_possibility(spring_2, damaged_tuple_4)
+
