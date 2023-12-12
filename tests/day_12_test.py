@@ -54,3 +54,23 @@ class TestFilterBrokenSprings:
         valid_springs = filter_broken_springs((3,2,1), matching_springs)
 
         assert len(valid_springs) == 10
+
+class TestSumPossibilities:
+    def test_returns_possibilities_for_one_springs(self):
+        springs = "?###???????? 3,2,1"
+
+        possibilities = sum_possibilities(springs)
+
+        assert possibilities == 10
+
+    def test_returns_sum_for_multiple_springs(self):
+        springs = """???.### 1,1,3
+.??..??...?##. 1,1,3
+?#?#?#?#?#?#?#? 1,3,1,6
+????.#...#... 4,1,1
+????.######..#####. 1,6,5
+?###???????? 3,2,1"""
+        
+        possibilities = sum_possibilities(springs)
+
+        assert possibilities == 21
