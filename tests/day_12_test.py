@@ -74,6 +74,7 @@ class TestSumPossibilities:
         possibilities = sum_possibilities(springs)
 
         assert possibilities == 21
+
 class TestIsValidPossibility:
     def test_returns_false_if_spring_is_not_possible(self):
         spring = "?.."
@@ -94,3 +95,56 @@ class TestIsValidPossibility:
         assert is_valid_possibility(spring, damaged_tuple_3)
         assert is_valid_possibility(spring_2, damaged_tuple_4)
 
+class TestFindPossibilities:
+    def test_returns_zero_if_none_possible(self):
+        spring = "?.?."
+        damaged_tuple = (3,)
+
+        possibilities = find_possibilities(spring, damaged_tuple)
+        
+        assert possibilities == 0
+
+    def test_returns_1_if_only_one_possible(self):
+        spring = ".??."
+        spring_2 = "???.###"
+        spring_3 = "?#?#?#?#?#?#?#?"
+        spring_4 = "????.#...#..."
+        damaged_tuple = (2,)
+        damaged_tuple_2 = (1,1,3)
+        damaged_tuple_3 = (1,3,1,6)
+        damaged_tuple_4 = (4,1,1)
+
+        possibilities = find_possibilities(spring, damaged_tuple)
+        possibilities_2 = find_possibilities(spring_2, damaged_tuple_2)
+        possibilities_3 = find_possibilities(spring_3, damaged_tuple_3)
+        possibilities_4 = find_possibilities(spring_4, damaged_tuple_4)
+
+        assert possibilities == 1 
+        assert possibilities_2 == 1 
+        assert possibilities_3 == 1 
+        assert possibilities_4 == 1 
+        
+    def test_returns_number_of_possibilities(self):
+        spring = ".??..??...?##."
+        spring_2 = "????.######..#####."
+        spring_3 = "?###????????"
+        damaged_tuple = (1,1,3)
+        damaged_tuple_2 = (1,6,5)
+        damaged_tuple_3 = (3,2,1)
+
+        possibilities = find_possibilities(spring, damaged_tuple)
+        possibilities_2 = find_possibilities(spring_2, damaged_tuple_2)
+        possibilities_3 = find_possibilities(spring_3, damaged_tuple_3)
+
+        assert possibilities == 4
+        assert possibilities_2 == 4
+        assert possibilities_3 == 10
+
+    def test_works_on_long_springs(self):
+        spring = "?".join(["?###????????"] * 5)
+        damaged_tuple = (3,2,1) * 5
+        print(spring, damaged_tuple)
+
+        possibilities = find_possibilities(spring, damaged_tuple)
+
+        assert possibilities == 506250
