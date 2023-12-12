@@ -33,13 +33,23 @@ def sum_possibilities(springs):
     # and filter them
     springs = springs.splitlines()
     springs = [[row.split()[0], tuple(int(n) for n in row.split()[1].split(","))] for row in springs]
+    springs = [["?".join([row[0]] * 5), row[1] * 5] for row in springs]
+    print(springs[0])
     spring_lengths = set(len(spring[0]) for spring in springs)
+    print(spring_lengths)
     
     all_springs = {length: create_all_springs(length) for length in spring_lengths}
 
     total_possibilities = 0
     for spring in springs:
+        print("new spring")
         possible_springs = filter_matching_springs(spring[0], all_springs[len(spring[0])])
         possible_springs = filter_broken_springs(spring[1], possible_springs)
         total_possibilities += len(possible_springs)
     return total_possibilities
+
+if __name__ == "__main__":
+    with open("inputs/day_12.txt") as f:
+        springs = f.read()
+        total_possibilities = sum_possibilities(springs)
+        print(total_possibilities, "< total possibilities")
