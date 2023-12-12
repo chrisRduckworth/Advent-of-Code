@@ -6,7 +6,11 @@ def create_all_springs(length):
 
 def filter_matching_springs(spring, possible_springs):
     """returns springs which match the . and ? of the input spring"""
-    pass
+    matching_springs = []
+    for p_spring in possible_springs:
+        if all(char == "?" or char == p_spring[i] for i, char in enumerate(spring)):
+            matching_springs.append(p_spring)
+    return matching_springs
 
 def sum_possibilities(springs):
     """sums the possible number of spring combinations"""
