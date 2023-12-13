@@ -1,4 +1,4 @@
-from day_13 import compare_mirrored, make_notes, sum_notes
+from day_13 import compare_mirrored, make_notes, sum_notes, sum_notes_part_two
 
 class TestCompareMirrored:
     def test_returns_true_for_symmetrical(self):
@@ -129,3 +129,23 @@ class TestSumNotes:
 #....#..#
 """
         assert sum_notes(patterns) == 405
+
+class TestSumNotestPart2:
+    def test_sums_notes_with_differences(self):
+        patterns = """#.##..##.
+..#.##.#.
+##......#
+##......#
+..#.##.#.
+..##..##.
+#.#.##.#.
+
+#...##..#
+#....#..#
+..##..###
+#####.##.
+#####.##.
+..##..###
+#....#..#
+"""
+        assert sum_notes_part_two(patterns) == 400
