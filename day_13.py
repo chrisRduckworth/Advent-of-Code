@@ -27,3 +27,11 @@ def make_notes(pattern):
             total += i * 100
     return total
 
+def sum_notes(patterns):
+    patterns = patterns.split("\n\n")
+    patterns = [pattern.splitlines() for pattern in patterns]
+    patterns = [[list(row) for row in pattern] for pattern in patterns]
+    total = 0
+    for pattern in patterns:
+        total += make_notes(pattern)
+    return total
