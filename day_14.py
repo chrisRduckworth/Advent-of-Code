@@ -34,8 +34,32 @@ def spin_platform(platform):
         platform = move_rocks(platform, "E")
     return platform
 
+def load_after_billion(platform):
+    platforms = [platform]
+    for i in range(1, 1000000001):
+        print(i)
+        platform = spin_platform(platform)
+        if platform in platforms:
+            platforms.append(platform)
+            looping_platform = platform
+            break
+        platforms.append(platform)
+    loop_start = platforms.index(looping_platform)
+    loop_end = platforms.index(looping_platform, loop_start + 1)
+    loop_length = loop_end - loop_start
+    position_after_billion = loop_start + ((1000000000 - loop_start) % loop_length)
+
+    final_platform = platforms[position_after_billion]
+
+    load = 0
+    for i, row in enumerate(final_platform[::-1]):
+        load += (i + 1) * row.count("O")
+    return load
+
 if __name__ == "__main__":
     with open("inputs/day_14.txt") as f:
         platform = f.read().splitlines()
         load = calc_load(platform)
         print(load, "< load")
+        load_later = load_after_billion(platform)
+        print(load_later, "< load after a billion spins")
