@@ -35,3 +35,21 @@ class TestMoveRocks:
         tilted_platform = move_rocks(platform)
 
         assert tilted_platform == ["O#O.", "OOO#", "..OO", "...."]
+
+class TestCalcLoad:
+    def test_calculates_load_on_platform(self):
+        platform = """OOOO.#.O..
+OO..#....#
+OO..O##..O
+O..#.OO...
+........#.
+..#....#.#
+..O..#.O.O
+..O.......
+#....###..
+#....#....
+""".splitlines()
+        
+        load = calc_load(platform)
+
+        assert load == 136
