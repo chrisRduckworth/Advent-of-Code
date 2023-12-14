@@ -1,5 +1,11 @@
 def move_rocks(platform):
-    pass
+    for y, row in enumerate(platform[1:]):
+        for x, space in enumerate(row):
+            if space == "O":
+                if platform[y][x] == ".":
+                    platform[y] = platform[y][:x] + "O" + platform[y][x+1:]
+                    platform[y+1] = platform[y + 1][:x] + "." + platform[y + 1][x+1:]
+    return platform
 
 def calc_load(platform):
     pass
