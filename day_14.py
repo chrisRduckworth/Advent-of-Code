@@ -8,7 +8,12 @@ def move_rocks(platform):
     return platform
 
 def calc_load(platform):
-    pass
+    for i in range(len(platform) - 1):
+        platform = move_rocks(platform)
+    load = 0
+    for i, row in enumerate(platform[::-1]):
+        load += (i + 1) * row.count("O")
+    return load
 
 if __name__ == "__main__":
     with open("inputs/day_14.txt") as f:
