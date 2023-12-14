@@ -36,6 +36,17 @@ class TestMoveRocks:
 
         assert tilted_platform == ["O#O.", "OOO#", "..OO", "...."]
 
+    def test_moves_in_other_directions(self):
+        platform = ["O#..", "O.O#", ".OOO", "..O."]
+
+        tilted_south = move_rocks(platform.copy(), "S")
+        tilted_east = move_rocks(platform.copy(), "E")
+        tilted_west = move_rocks(platform.copy(), "W")
+
+        assert tilted_south == [".#..", "O.O#", "O.O.", ".OOO"]
+        assert tilted_east == ["O#..", ".OO#", ".OOO", "...O"]
+        assert tilted_west == ["O#..", "OO.#", "OOO.", ".O.."]
+
 class TestCalcLoad:
     def test_calculates_load_on_platform(self):
         platform = """OOOO.#.O..
