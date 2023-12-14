@@ -18,3 +18,5 @@ def calc_load(platform):
 if __name__ == "__main__":
     with open("inputs/day_14.txt") as f:
         platform = f.read().splitlines()
+        load = calc_load(platform)
+        print(load, "< load")
