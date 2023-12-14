@@ -1,4 +1,4 @@
-from day_14 import move_rocks, calc_load, spin_platform
+from day_14 import move_rocks, calc_load, spin_platform, load_after_billion
 
 class TestMoveRocks:
     def test_doesnt_move_top_row(self):
@@ -67,17 +67,16 @@ O..#.OO...
 
 class TestSpinPlatform:
     def test_spins_a_platform(self):
-        platform = """OOOO.#.O..
-OO..#....#
-OO..O##..O
-O..#.OO...
-........#.
-..#....#.#
-..O..#.O.O
-..O.......
+        platform = """O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+.O.....O#.
+O.#..O.#.#
+..O..#O..O
+.......O..
 #....###..
-#....#....
-""".splitlines()
+#OO..#....""".splitlines()
         
         expected = """.....#....
 ....#...O#
@@ -93,3 +92,20 @@ O..#.OO...
         spun = spin_platform(platform)
 
         assert spun == expected
+
+class TestLoadAfterBillion:
+    def test_returns_load(self):
+        platform = """O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+.O.....O#.
+O.#..O.#.#
+..O..#O..O
+.......O..
+#....###..
+#OO..#....""".splitlines()
+        
+        load = load_after_billion(platform)
+
+        assert load == 64
