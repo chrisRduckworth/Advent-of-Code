@@ -23,6 +23,17 @@ def calc_load(platform):
         load += (i + 1) * row.count("O")
     return load
 
+def spin_platform(platform):
+    for i in range(len(platform) - 1):
+        platform = move_rocks(platform)
+    for i in range(len(platform[0]) - 1):
+        platform = move_rocks(platform, "W")
+    for i in range(len(platform) - 1):
+        platform = move_rocks(platform, "S")
+    for i in range(len(platform[0]) - 1):
+        platform = move_rocks(platform, "E")
+    return platform
+
 if __name__ == "__main__":
     with open("inputs/day_14.txt") as f:
         platform = f.read().splitlines()
