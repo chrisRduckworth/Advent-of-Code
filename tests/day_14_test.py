@@ -1,4 +1,4 @@
-from day_14 import move_rocks, calc_load
+from day_14 import move_rocks, calc_load, spin_platform
 
 class TestMoveRocks:
     def test_doesnt_move_top_row(self):
@@ -64,3 +64,32 @@ O..#.OO...
         load = calc_load(platform)
 
         assert load == 136
+
+class TestSpinPlatform:
+    def test_spins_a_platform(self):
+        platform = """OOOO.#.O..
+OO..#....#
+OO..O##..O
+O..#.OO...
+........#.
+..#....#.#
+..O..#.O.O
+..O.......
+#....###..
+#....#....
+""".splitlines()
+        
+        expected = """.....#....
+....#...O#
+...OO##...
+.OO#......
+.....OOO#.
+.O#...O#.#
+....O#....
+......OOOO
+#...O###..
+#..OO#....""".splitlines()
+        
+        spun = spin_platform(platform)
+
+        assert spun == expected
