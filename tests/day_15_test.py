@@ -1,4 +1,4 @@
-from day_15 import calc_new_value, calc_value, dash, equals
+from day_15 import calc_new_value, calc_value, dash, equals, focusing_power
 
 class TestCalcNewValue:
     def test_returns_correct_value_starting_at_zero(self):
@@ -88,3 +88,9 @@ class TestEquals:
         labels, boxes = equals(labels, boxes, step)
 
         assert boxes == {0:["rn", "cm"], 3:["ot", "ab", "pc"]}
+
+class TestFocusingPower:
+    def test_calculates_focusing_power(self):
+        sequence = ["rn=1", "cm-", "qp=3", "cm=2", "qp-", "pc=4", "ot=9", "ab=5", "pc-", "pc=6", "ot=7"]
+
+        assert focusing_power(sequence) == 145
