@@ -1,4 +1,4 @@
-from day_15 import calc_new_value, calc_value, dash
+from day_15 import calc_new_value, calc_value, dash, equals
 
 class TestCalcNewValue:
     def test_returns_correct_value_starting_at_zero(self):
@@ -51,3 +51,22 @@ class TestDash:
         labels, boxes = dash(labels, boxes, step)
 
         assert boxes == {0:[]}
+
+class TestEquals:
+    def test_if_label_exists_update_focal_length(self):
+        labels = {"rn": 1, "cm": 2, "ot":9, "ab":5, "pc":6}
+        boxes = {0:["rn", "cm"], 3:["ot", "ab", "pc"]}
+        step = "ot=7"
+
+        labels, boxes = equals(labels, boxes, step)
+
+        assert labels == {"rn": 1, "cm": 2, "ot":7, "ab":5, "pc":6}
+        
+    def test_does_not_affect_boxes_if_label_exists(self):
+        labels = {"rn": 1, "cm": 2, "ot":9, "ab":5, "pc":6}
+        boxes = {0:["rn", "cm"], 3:["ot", "ab", "pc"]}
+        step = "ot=7"
+
+        labels, boxes = equals(labels, boxes, step)
+
+        assert boxes == {0:["rn", "cm"], 3:["ot", "ab", "pc"]}
