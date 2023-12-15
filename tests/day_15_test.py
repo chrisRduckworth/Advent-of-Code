@@ -1,4 +1,4 @@
-from day_15 import calc_new_value, calc_value
+from day_15 import calc_new_value, calc_value, dash
 
 class TestCalcNewValue:
     def test_returns_correct_value_starting_at_zero(self):
@@ -22,3 +22,32 @@ class TestCalcValue:
         assert calc_value("pc-") == 48
         assert calc_value("pc=6") == 214
         assert calc_value("ot=7") == 231
+
+class TestDash:
+    def test_does_nothing_if_label_not_present(self):
+        labels = {"rn": 1}
+        boxes = {0:["rn"]}
+        step = "cm-"
+
+        labels, boxes = dash(labels, boxes, step)
+
+        assert labels == {"rn": 1}
+        assert boxes == {0: ["rn"]}
+
+    def test_removes_label_from_labels(self):
+        labels = {"rn": 1}
+        boxes = {0:["rn"]}
+        step = "rn-"
+
+        labels, boxes = dash(labels, boxes, step)
+
+        assert labels == {}
+
+    def test_removes_label_from_box(self):
+        labels = {"rn": 1}
+        boxes = {0:["rn"]}
+        step = "rn-"
+
+        labels, boxes = dash(labels, boxes, step)
+
+        assert boxes == {0:[]}
