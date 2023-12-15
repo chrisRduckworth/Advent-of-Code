@@ -70,3 +70,21 @@ class TestEquals:
         labels, boxes = equals(labels, boxes, step)
 
         assert boxes == {0:["rn", "cm"], 3:["ot", "ab", "pc"]}
+
+    def test_adds_label_to_labels_if_doesnt_exist(self):
+        labels = {"rn": 1, "cm": 2, "ot":9, "ab":5, "pc":6}
+        boxes = {0:["rn", "cm"], 1:[], 3:["ot", "ab", "pc"]}
+        step = "qp=3"
+
+        labels, boxes = equals(labels, boxes, step)
+
+        assert labels == {"rn": 1, "cm": 2, "ot":9, "ab":5, "pc":6, "qp": 3}
+
+    def test_adds_label_to_box(self):
+        labels = {"rn": 1, "ot":9, "ab":5, "pc":6}
+        boxes = {0:["rn"], 3:["ot", "ab", "pc"]}
+        step = "cm=2"
+
+        labels, boxes = equals(labels, boxes, step)
+
+        assert boxes == {0:["rn", "cm"], 3:["ot", "ab", "pc"]}
