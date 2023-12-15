@@ -25,6 +25,14 @@ def dash(labels, boxes, step):
     
     return labels, boxes
 
+def equals(labels, boxes, step):
+    """adds or replaces lens"""
+    label = step[:-2]
+    focal_length = int(step[-1])
+    if label in labels:
+        labels[label] = focal_length
+        return labels, boxes
+
 if __name__ == "__main__":
     with open("inputs/day_15.txt") as f:
         sequence = f.read().split(",")
