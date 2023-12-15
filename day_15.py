@@ -37,6 +37,21 @@ def equals(labels, boxes, step):
     
     return labels, boxes
 
+def focusing_power(sequence):
+    """calculates the focusing power after executing the sequence"""
+    labels = {}
+    boxes = {i:[] for i in range(256)}
+    for step in sequence:
+        if "-" in step:
+            labels, boxes = dash(labels, boxes, step)
+        else:
+            labels, boxes = equals(labels, boxes, step)
+    total = 0
+    for i, box in enumerate(boxes):
+        for j, lens in enumerate(boxes[box]):
+            total += (i + 1) * (j + 1) * labels[lens]
+    return total
+
 if __name__ == "__main__":
     with open("inputs/day_15.txt") as f:
         sequence = f.read().split(",")
