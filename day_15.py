@@ -28,10 +28,14 @@ def dash(labels, boxes, step):
 def equals(labels, boxes, step):
     """adds or replaces lens"""
     label = step[:-2]
+    box_number = calc_value(label)
     focal_length = int(step[-1])
-    if label in labels:
-        labels[label] = focal_length
-        return labels, boxes
+    
+    if label not in labels:
+        boxes[box_number].append(label)
+    labels[label] = focal_length
+    
+    return labels, boxes
 
 if __name__ == "__main__":
     with open("inputs/day_15.txt") as f:
