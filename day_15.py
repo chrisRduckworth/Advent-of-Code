@@ -57,3 +57,5 @@ if __name__ == "__main__":
         sequence = f.read().split(",")
         total = sum(calc_value(step) for step in sequence)
         print(total, "< total")
+        total_focusing_power = focusing_power(sequence)
+        print(total_focusing_power, "< total focusing power")
