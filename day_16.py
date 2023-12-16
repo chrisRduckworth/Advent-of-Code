@@ -75,3 +75,5 @@ if __name__ == "__main__":
         pattern = [list(row) for row in f.read().splitlines()]
         energized = find_energized_tiles(pattern)
         print(energized, "< energized")
+        optimal = find_optimal_position(pattern)
+        print(optimal, "< optimal")
