@@ -11,7 +11,7 @@ def is_moving_to_edge(position, direction, dimensions):
         return True
     return False
 
-def find_energized_tiles(pattern):
+def find_energized_tiles(pattern, i_pos=(-1,0), i_dir="E"):
     visited = []
     def find_next_position(position, direction):
         nonlocal pattern
@@ -55,8 +55,20 @@ def find_energized_tiles(pattern):
                 find_next_position((x,y), "N")
                 return find_next_position((x,y), "S")
         
-    find_next_position((-1,0), "E")
+    find_next_position(i_pos, i_dir)
     return len(set(str(v[0]) for v in visited)) - 1
+
+def find_optimal_position(pattern):
+    values = []
+    for y in range(len(pattern)):
+        values.append(find_energized_tiles(pattern, (-1, y), "E"))
+        values.append(find_energized_tiles(pattern, (len(pattern[0]), y), "W"))
+
+    for x in range(len(pattern[0])):
+        values.append(find_energized_tiles(pattern, (x, -1), "S"))
+        values.append(find_energized_tiles(pattern, (x, len(pattern)), "N"))
+    
+    return max(values)
 
 if __name__ == "__main__":
     with open("inputs/day_16.txt") as f:
