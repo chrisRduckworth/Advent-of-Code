@@ -1,4 +1,4 @@
-from day_16 import is_moving_to_edge
+from day_16 import is_moving_to_edge, find_energized_tiles
 
 class TestIsMovingToEdge:
     def test_returns_false_if_inside(self):
@@ -53,4 +53,18 @@ class TestIsMovingToEdge:
         for y in range(10):
             assert is_moving_to_edge((0,y), direction, dimensions)
 
+class TestFindEnergizedTiles:
+    def test_returns_number_of_energized_tiles(self):
+        pattern = r""".|...\....
+|.-.\.....
+.....|-...
+........|.
+..........
+.........\
+..../.\\..
+.-.-/..|..
+.|....-|.\
+..//.|....""".splitlines()
+        pattern = [list(row) for row in pattern]
 
+        assert find_energized_tiles(pattern) == 46
