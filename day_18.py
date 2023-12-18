@@ -1,3 +1,5 @@
+import re
+
 def dig_trench(instructions):
     """creates an array representing the dug trench"""
     trenches = [["#"]]
@@ -33,4 +35,26 @@ def dig_trench(instructions):
 
     return trenches
 
-# flood fill for filling it up
+def fill_trenches(trenches):
+    trenches.insert(0, ["."] * len(trenches[0]))
+    trenches.append(["." * len(trenches[0])])
+    trenches = [[".", *row, "."] for row in trenches]
+
+    for x, char in enumerate(trenches[1]):
+        if trenches[2][x] == "." and char == "#":
+            start = (x, 2)
+            break
+    
+    def flood_fill(x, y):
+        nonlocal trenches
+        if trenches[y][x] == "#":
+            return
+        trenches[y][x] = "#"
+        flood_fill(x-1, y)
+        flood_fill(x+1, y)
+        flood_fill(x, y-1)
+        flood_fill(x, y+1)
+
+    flood_fill(*start)
+
+    return [row[1:-1] for row in trenches[1:-1]]
