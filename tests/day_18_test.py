@@ -1,4 +1,4 @@
-from day_18 import dig_trench
+from day_18 import dig_trench, fill_trenches
 
 class TestDigTrench:
     def test_returns_digs_single_instruction(self):
@@ -57,3 +57,33 @@ U 2 (#7a21e3)""".splitlines()
         trenches = dig_trench(instructions)
 
         assert trenches == expected
+
+class TestFillTrenches:
+    def test_fills_trenches(self):
+        trenches = """#######
+#.....#
+###...#
+..#...#
+..#...#
+###.###
+#...#..
+##..###
+.#....#
+.######""".splitlines()
+        trenches = [list(r) for r in trenches]
+
+        expected = """#######
+#######
+#######
+..#####
+..#####
+#######
+#####..
+#######
+.######
+.######""".splitlines()
+        expected = [list(r) for r in expected]
+
+        filled = fill_trenches(trenches)
+
+        assert filled == expected
