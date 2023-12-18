@@ -1,5 +1,3 @@
-import re
-
 def dig_trench(instructions):
     """creates an array representing the dug trench"""
     trenches = [["#"]]
@@ -58,3 +56,12 @@ def fill_trenches(trenches):
     flood_fill(*start)
 
     return [row[1:-1] for row in trenches[1:-1]]
+
+if __name__ == "__main__":
+    with open("inputs/day_18.txt") as f:
+        instructions = [[i.split()[0], int(i.split()[1]), i.split()[2]] for i in f.read().splitlines()]
+        trenches = dig_trench(instructions)
+        filled = fill_trenches(trenches)
+        filled = "\n".join("".join(r) for r in filled)
+        print(filled)
+        print(filled.count("#"), "< total dug")
