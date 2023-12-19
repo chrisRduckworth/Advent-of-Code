@@ -1,4 +1,4 @@
-from day_19 import get_info
+from day_19 import get_info, eval_rule
 
 class TestGetInfo:
     def test_returns_parts(self):
@@ -65,3 +65,21 @@ hdj{m>838:A,pv}
         rules = get_info(system)[0]
 
         assert rules == expected
+
+class TestEvalRule:
+    def test_returns_output_of_single_rule(self):
+        rule = [("s<1351", "px"), "qqz"]
+
+        part = {"x":787, "m":2655, "a":1222, "s":2876}
+        part_2 = {"x":1679, "m":44, "a":2067, "s":496}
+
+        assert eval_rule(part, rule) == "qqz"
+        assert eval_rule(part_2, rule) == "px"
+        
+        rule = [("s>2770", "qs"), ("m<1801", "hdj"), "R"]
+
+        part_3 = {"x":1, "m": 2000, "a":1, "s":1}
+
+        assert eval_rule(part, rule) == "qs"
+        assert eval_rule(part_2, rule) == "hdj"
+        assert eval_rule(part_3, rule) == "R"
