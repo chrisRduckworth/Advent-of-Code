@@ -54,3 +54,9 @@ def sum_accepted(parts, rules):
         else:
             rejected.append(part)
     return sum(sum(part.values()) for part in accepted)
+
+if __name__ == "__main__":
+    with open("inputs/day_19.txt") as f:
+        rules, parts = get_info(f.read())
+        total_accepted = sum_accepted(parts, rules)
+        print(total_accepted, "< total accepted parts")
