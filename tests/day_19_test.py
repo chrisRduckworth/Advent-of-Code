@@ -1,4 +1,4 @@
-from day_19 import get_info, eval_rule, eval_part, sum_accepted
+from day_19 import get_info, eval_rule, eval_part, sum_accepted, find_new_range
 
 class TestGetInfo:
     def test_returns_parts(self):
@@ -137,3 +137,87 @@ hdj{m>838:A,pv}
         total = sum_accepted(parts, rules)
 
         assert total == 19114
+
+class TestFindNewRange:
+    def test_does_not_modify_original_range(self):
+        old_range = {"x":[1,4000], "m":[1,4000], "a":[1,4000], "s":[1,4000]}
+        constraint = "a<2006"
+
+        find_new_range(old_range, constraint)
+
+        assert old_range == {"x":[1,4000], "m":[1,4000], "a":[1,4000], "s":[1,4000]}
+        
+    def test_returns_new_range_if_rule_does_not_overlap(self):
+        old_range = {"x":[1,4000], "m":[1,4000], "a":[1,4000], "s":[1,4000]}
+        constraint = "a<2006"
+
+        new_range = find_new_range(old_range, constraint)[0]
+
+        assert new_range == {"x":[1,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
+
+        constraint = "x>3000"
+
+        new_range = find_new_range(new_range, constraint)[0]
+
+        assert new_range == {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
+
+    def test_returns_leftover_range_for_pass_through(self):
+        old_range = {"x":[1,4000], "m":[1,4000], "a":[1,4000], "s":[1,4000]}
+        constraint = "a<2006"
+
+        pass_through = find_new_range(old_range, constraint)[1]
+
+        assert pass_through == {"x":[1,4000], "m":[1,4000], "a":[2006,4000], "s":[1,4000]}
+
+        constraint = "x>3000"
+
+        pass_through = find_new_range(pass_through, constraint)[1]
+
+        assert pass_through == {"x":[1,3000], "m":[1,4000], "a":[2006, 4000], "s":[1,4000]}
+
+    def test_works_when_constraint_overlaps(self):
+        old_range = {"x":[1,3000], "m":[1,4000], "a":[2006, 4000], "s":[1,4000]}
+        constraint = "a>3000"
+
+        new_range,pass_through = find_new_range(old_range, constraint)
+
+        assert new_range == {"x":[1,3000], "m":[1,4000], "a":[3001, 4000], "s":[1,4000]}
+        assert pass_through == {"x":[1,3000], "m":[1,4000], "a":[2006, 3000], "s":[1,4000]}
+
+        old_range = {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]} 
+        constraint = "a<1500"
+
+        new_range,pass_through = find_new_range(old_range, constraint)
+
+        assert new_range == {"x":[3001,4000], "m":[1,4000], "a":[1,1499], "s":[1,4000]}
+        assert pass_through == {"x":[3001,4000], "m":[1,4000], "a":[1500, 2005], "s":[1,4000]}
+
+    def test_returns_0_if_constrain_out_of_bounds(self):
+        old_range = {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
+        constraint = "x>2500"
+
+        new_range,pass_through = find_new_range(old_range, constraint)
+
+        assert new_range == {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
+        assert pass_through == 0
+
+        constraint = "a<3000"
+        
+        new_range,pass_through = find_new_range(old_range, constraint)
+        
+        assert new_range == {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
+        assert pass_through == 0
+
+        constraint = "x<2500"
+        
+        new_range,pass_through = find_new_range(old_range, constraint)
+        
+        assert new_range == 0
+        assert pass_through == {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
+
+        constraint = "a>3000"
+        
+        new_range,pass_through = find_new_range(old_range, constraint)
+        
+        assert new_range == 0
+        assert pass_through == {"x":[3001,4000], "m":[1,4000], "a":[1,2005], "s":[1,4000]}
