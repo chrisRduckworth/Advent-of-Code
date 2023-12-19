@@ -22,3 +22,13 @@ def get_info(system):
     parts = [eval(part) for part in parts]
     
     return final_rules, parts
+
+def eval_rule(part, rule):
+    x = part["x"]
+    m = part["m"]
+    a = part["a"]
+    s = part["s"]
+    for r in rule[:-1]:
+        if eval(r[0]):
+            return r[1]
+    return rule[-1]
