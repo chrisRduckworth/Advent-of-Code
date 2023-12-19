@@ -1,6 +1,7 @@
 import re
 
 def get_info(system):
+    """extracts rules and parts from input"""
     rules, parts = system.split("\n\n")
     rules = rules.splitlines()
     final_rules = {}
@@ -24,6 +25,7 @@ def get_info(system):
     return final_rules, parts
 
 def eval_rule(part, rule):
+    """finds result of a part through a rule"""
     x = part["x"]
     m = part["m"]
     a = part["a"]
@@ -32,3 +34,10 @@ def eval_rule(part, rule):
         if eval(r[0]):
             return r[1]
     return rule[-1]
+
+def eval_part(part, rules):
+    """finds final location of a part"""
+    location = "in"
+    while location not in "AR":
+        location = eval_rule(part, rules[location])
+    return location
