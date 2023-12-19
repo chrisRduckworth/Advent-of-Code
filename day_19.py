@@ -41,3 +41,16 @@ def eval_part(part, rules):
     while location not in "AR":
         location = eval_rule(part, rules[location])
     return location
+
+def sum_accepted(parts, rules):
+    """returns the sum of accepted values"""
+    accepted = []
+    rejected = []
+    for part in parts:
+        # could just be a total += sum here but I might
+        # need this in part two
+        if eval_part(part, rules) == "A":
+            accepted.append(part)
+        else:
+            rejected.append(part)
+    return sum(sum(part.values()) for part in accepted)
