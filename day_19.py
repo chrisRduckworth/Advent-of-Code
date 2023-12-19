@@ -1,4 +1,4 @@
-import re
+import re, copy
 
 def get_info(system):
     """extracts rules and parts from input"""
@@ -54,6 +54,33 @@ def sum_accepted(parts, rules):
         else:
             rejected.append(part)
     return sum(sum(part.values()) for part in accepted)
+
+def find_new_range(old_range, constraint):
+    """returns the range which passes, and the range which fails, returns 0 if no ranges pas"""
+    key = constraint[0]
+    comparison = constraint[1]
+    value = int(constraint[2:])
+    new_range = copy.deepcopy(old_range) 
+    pass_through = copy.deepcopy(old_range)
+    if comparison == "<":
+        if old_range[key][1] < value:
+            # new range is identical to old range
+            return new_range, 0
+        if old_range[key][0] > value:
+            # new range has no possible values, everything passes thru
+            return 0, pass_through
+        new_range[key][1] = value - 1
+        pass_through[key][0] = value
+    else:
+        if old_range[key][0] > value:
+            # new range is identical to old range
+            return new_range, 0
+        if old_range[key][1] < value:
+            # new range has no possible values, everything passes thru
+            return 0, pass_through
+        new_range[key][0] = value + 1
+        pass_through[key][1] = value
+    return new_range, pass_through
 
 if __name__ == "__main__":
     with open("inputs/day_19.txt") as f:
