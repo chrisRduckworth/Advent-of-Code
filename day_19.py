@@ -1,4 +1,5 @@
 import re, copy
+from math import prod
 
 def get_info(system):
     """extracts rules and parts from input"""
@@ -82,8 +83,38 @@ def find_new_range(old_range, constraint):
         pass_through[key][1] = value
     return new_range, pass_through
 
+def total_possibilities(rules):
+    """return the total number of possible accepted combinations"""
+    total = 0
+    start_range = {"x": [1,4000], "m": [1,4000], "a": [1,4000], "s": [1,4000]}
+    queue = []
+    queue.append((start_range, "in"))
+    while queue:
+        pass_through, rule_name = queue.pop()
+        
+        if pass_through == 0 or rule_name == "R":
+            # no possibilities or rejected
+            continue
+        if rule_name == "A":
+            # accepted
+            total += prod(x[1] - x[0] + 1 for x in pass_through.values())
+            continue
+        
+        rule_list = rules[rule_name]
+        
+        for rule in rule_list[:-1]:
+            # find new ranges and put them in the queue
+            new_range, pass_through = find_new_range(pass_through, rule[0])
+            queue.append((new_range, rule[1]))
+        
+        queue.append((pass_through, rule_list[-1]))
+    
+    return total
+
 if __name__ == "__main__":
     with open("inputs/day_19.txt") as f:
         rules, parts = get_info(f.read())
         total_accepted = sum_accepted(parts, rules)
         print(total_accepted, "< total accepted parts")
+        possibilities = total_possibilities(rules)
+        print(possibilities, "< number of total possibilites")
