@@ -1,4 +1,4 @@
-from day_20 import Module, Button, Broadcaster, FlipFlop, Conjunction
+from day_20 import Module, Button, Broadcaster, FlipFlop, Conjunction, create_modules
 
 
 class TestModule:
@@ -203,3 +203,60 @@ class TestConjunction:
         conjunction.handle_pulse("low", queue, "d")
 
         assert queue == [["b", "a", "high"], ["c", "a", "high"]] * 3
+
+
+class TestCreateModules:
+    def test_creates_button(self):
+        in_string = "broadcaster -> a, b, c"
+
+        modules = create_modules(in_string)
+        
+        assert isinstance(modules["button"], Button) 
+        assert modules["button"].connections == ["broadcaster"]
+
+    def test_creates_broadcaster(self):
+        in_string = "broadcaster -> a, b, c"
+
+        modules = create_modules(in_string)
+
+        assert isinstance(modules["broadcaster"], Broadcaster)
+        assert modules["broadcaster"].connections == ["a", "b", "c"]
+
+    def test_creates_flip_flop(self):
+        in_string = "%a -> b"
+
+        modules = create_modules(in_string)
+
+        assert isinstance(modules["a"], FlipFlop)
+        assert modules["a"].name == "a"
+        assert modules["a"].connections == ["b"]
+
+    def test_creates_conjunction(self):
+        in_string = "&zq -> fd, gk\nbroadcaster -> zq, ab\n%as -> zq"
+
+        modules = create_modules(in_string)
+
+        assert isinstance(modules["zq"], Conjunction)
+        assert modules["zq"].name == "zq"
+        assert modules["zq"].connections == ["fd", "gk"]
+        assert modules["zq"].inputs == {"broadcaster": "low", "as": "low"}
+
+    def test_creates_all_modules(self):
+        in_string = """broadcaster -> a
+%a -> inv, con
+&inv -> b
+%b -> con
+&con -> output"""
+        
+        modules = create_modules(in_string)
+
+        print(modules)
+
+        assert "button" in modules
+        assert "broadcaster" in modules
+        assert "a" in modules
+        assert "inv" in modules
+        assert "b" in modules
+        assert "con" in modules
+
+        assert len(modules) == 6
