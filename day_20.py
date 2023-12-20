@@ -102,7 +102,15 @@ def find_pulses(modules):
         modules["button"].send_pulse(queue)
         while queue:
             module, input_module, pulse = queue.pop(0)
+            if module not in modules:
+                continue
             modules[module].handle_pulse(pulse, queue, input_module)
     total_low = sum(m.get_sent_low() for m in modules.values())
     total_high = sum(m.get_sent_high() for m in modules.values())
     return total_low * total_high
+
+if __name__ == "__main__":
+    with open("inputs/day_20.txt") as f:
+        modules = create_modules(f.read())
+        total_pulses = find_pulses(modules)
+        print(total_pulses, "< product of pulses")
