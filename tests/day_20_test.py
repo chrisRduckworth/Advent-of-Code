@@ -1,4 +1,4 @@
-from day_20 import Module, Button, Broadcaster, FlipFlop, Conjunction, create_modules
+from day_20 import Module, Button, Broadcaster, FlipFlop, Conjunction, create_modules, find_pulses
 
 
 class TestModule:
@@ -260,3 +260,27 @@ class TestCreateModules:
         assert "con" in modules
 
         assert len(modules) == 6
+
+
+class TestFindPulses:
+    def test_returns_product_of_pulses(self):
+        in_string = """broadcaster -> a, b, c
+%a -> b
+%b -> c
+%c -> inv
+&inv -> a"""
+
+        modules = create_modules(in_string)
+
+        assert find_pulses(modules) == 32000000
+
+
+        in_string = """broadcaster -> a
+%a -> inv, con
+&inv -> b
+%b -> con
+&con -> output"""
+        
+        #modules = create_modules(in_string)
+
+        #assert find_pulses(modules) == 11687500
