@@ -1,3 +1,5 @@
+import re
+
 class Module:
     def __init__(self, name, connections):
         self.name = name
@@ -33,7 +35,7 @@ class Broadcaster(Module):
     def __init__(self, name, connections):
         super().__init__(name, connections)
 
-    def handle_pulse(self, pulse, queue):
+    def handle_pulse(self, pulse, queue, input_module=0):
         self.to_send = pulse
         self.send_pulse(queue)
 
@@ -43,7 +45,7 @@ class FlipFlop(Module):
         super().__init__(name, connections)
         self.switch = "off"
 
-    def handle_pulse(self, pulse, queue):
+    def handle_pulse(self, pulse, queue, input_module=0):
         if pulse == "low":
             if self.switch == "on":
                 self.switch = "off"
@@ -69,3 +71,26 @@ class Conjunction(Module):
             self.to_send = "high"
             self.send_pulse(queue)
         pass
+
+
+def create_modules(in_string):
+    in_string = in_string.splitlines()
+    in_string = [r.replace(" ", "").split("->") for r in in_string]
+    in_string = [[r[0], r[1].split(",")] for r in in_string]
+
+    modules = {}
+    modules["button"] = Button("name", ["broadcaster"])
+    
+    for r in in_string:
+        name, connections = r
+        if name == "broadcaster":
+            modules["broadcaster"] = Broadcaster("broadcaster", connections)
+        elif name[0] == "%":
+            modules[name[1:]] = FlipFlop(name[1:], connections)
+        elif name[0] == "&":
+            inputs = []
+            for m in in_string:
+                if name[1:] in m[1]:
+                    inputs.append(m[0].replace("%", "").replace("&", ""))
+            modules[name[1:]] = Conjunction(name[1:], connections, {i: "low" for i in inputs})
+    return modules
