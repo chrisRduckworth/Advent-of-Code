@@ -94,3 +94,15 @@ def create_modules(in_string):
                     inputs.append(m[0].replace("%", "").replace("&", ""))
             modules[name[1:]] = Conjunction(name[1:], connections, {i: "low" for i in inputs})
     return modules
+
+
+def find_pulses(modules):
+    for p in range(1000):
+        queue = []
+        modules["button"].send_pulse(queue)
+        while queue:
+            module, input_module, pulse = queue.pop(0)
+            modules[module].handle_pulse(pulse, queue, input_module)
+    total_low = sum(m.get_sent_low() for m in modules.values())
+    total_high = sum(m.get_sent_high() for m in modules.values())
+    return total_low * total_high
