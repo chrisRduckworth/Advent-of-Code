@@ -1,5 +1,6 @@
 from day_20 import Module, Button, Broadcaster, FlipFlop, Conjunction
 
+
 class TestModule:
     def test_inits_correctly(self):
         m = Module("a", ["b"])
@@ -21,7 +22,7 @@ class TestModule:
         assert queue == [["b", "a", "low"]]
 
         m_b.to_send = "high"
-        
+
         m_b.send_pulse(queue)
 
         assert queue == [["b", "a", "low"], ["a", "b", "high"]]
@@ -33,13 +34,14 @@ class TestModule:
 
         m_a.send_pulse(queue)
 
-        assert queue == [["b", "a", "low"], ["c", "a", "low"], ["d", "a", "low"]]
+        assert queue == [["b", "a", "low"], [
+            "c", "a", "low"], ["d", "a", "low"]]
 
     def test_get_sent_high(self):
         m_a = Module("a", ["b", "c", "d"])
         m_a.to_send = "high"
         queue = []
-        
+
         m_a.send_pulse(queue)
 
         assert m_a.get_sent_high() == 3
@@ -48,11 +50,12 @@ class TestModule:
         m_a = Module("a", ["b", "c", "d", "e"])
         m_a.to_send = "low"
         queue = []
-        
+
         m_a.send_pulse(queue)
 
         assert m_a.get_sent_low() == 4
-        
+
+
 class TestButton:
     def test_inits_correctly(self):
         button = Button("a", ["b"])
@@ -62,7 +65,8 @@ class TestButton:
         assert button.sent_low == 0
         assert button.to_send == "low"
         assert button.connections == ["b"]
-        
+
+
 class TestBroadcaster():
     def test_inits_correctly(self):
         broadcaster = Broadcaster("broadcaster", ["a", "b", "c"])
@@ -79,7 +83,7 @@ class TestBroadcaster():
         broadcaster.handle_pulse("low", [])
 
         assert broadcaster.to_send == "low"
-        
+
         broadcaster.handle_pulse("high", [])
 
         assert broadcaster.to_send == "high"
@@ -90,11 +94,13 @@ class TestBroadcaster():
 
         broadcaster.handle_pulse("low", queue)
 
-        assert queue == [["a", "broadcaster","low"], ["b","broadcaster", "low"], ["c","broadcaster", "low"]]
-        
+        assert queue == [["a", "broadcaster", "low"], [
+            "b", "broadcaster", "low"], ["c", "broadcaster", "low"]]
+
         broadcaster.handle_pulse("high", queue)
 
-        assert queue == [["a","broadcaster", "low"], ["b","broadcaster", "low"], ["c","broadcaster", "low"], ["a","broadcaster", "high"], ["b","broadcaster", "high"], ["c","broadcaster", "high"]]
+        assert queue == [["a", "broadcaster", "low"], ["b", "broadcaster", "low"], ["c", "broadcaster", "low"], [
+            "a", "broadcaster", "high"], ["b", "broadcaster", "high"], ["c", "broadcaster", "high"]]
 
 
 class TestFlipFlop:
@@ -107,7 +113,7 @@ class TestFlipFlop:
         assert flip_flop.to_send == 0
         assert flip_flop.connections == ["b", "c"]
         assert flip_flop.switch == "off"
-        
+
     def test_handle_pulse_sending_high(self):
         flip_flop = FlipFlop("a", ["b", "c"])
         queue = []
@@ -119,7 +125,7 @@ class TestFlipFlop:
         assert queue == []
 
         flip_flop.switch = "on"
-        
+
         flip_flop.handle_pulse("high", queue)
 
         assert flip_flop.switch == "on"
@@ -146,8 +152,10 @@ class TestFlipFlop:
         assert queue == [["b", "a", "high"], ["c", "a", "high"]]
 
         flip_flop.handle_pulse("low", queue)
-        
-        assert queue == [["b", "a", "high"], ["c", "a", "high"], ["b", "a", "low"], ["c", "a", "low"]]
+
+        assert queue == [["b", "a", "high"], ["c", "a", "high"], [
+            "b", "a", "low"], ["c", "a", "low"]]
+
 
 class TestConjunction:
     def test_inits_correctly(self):
@@ -167,7 +175,7 @@ class TestConjunction:
         conjunction.handle_pulse("high", [], "d")
 
         assert conjunction.inputs["d"] == "high"
-        
+
         conjunction.handle_pulse("low", [], "d")
 
         assert conjunction.inputs["d"] == "low"
@@ -195,4 +203,3 @@ class TestConjunction:
         conjunction.handle_pulse("low", queue, "d")
 
         assert queue == [["b", "a", "high"], ["c", "a", "high"]] * 3
-

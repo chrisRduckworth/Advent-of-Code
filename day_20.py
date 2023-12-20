@@ -22,10 +22,12 @@ class Module:
     def get_sent_low(self):
         return self.sent_low
 
+
 class Button(Module):
     def __init__(self, name, connections):
         super().__init__(name, connections)
         self.to_send = "low"
+
 
 class Broadcaster(Module):
     def __init__(self, name, connections):
@@ -34,6 +36,7 @@ class Broadcaster(Module):
     def handle_pulse(self, pulse, queue):
         self.to_send = pulse
         self.send_pulse(queue)
+
 
 class FlipFlop(Module):
     def __init__(self, name, connections):
@@ -45,11 +48,12 @@ class FlipFlop(Module):
             if self.switch == "on":
                 self.switch = "off"
                 self.to_send = "low"
-            else: 
+            else:
                 self.switch = "on"
                 self.to_send = "high"
-            
+
             self.send_pulse(queue)
+
 
 class Conjunction(Module):
     def __init__(self, name, connections, inputs):
