@@ -21,7 +21,6 @@ class TestTotalSteps:
 .##..##.##.
 ...........""".splitlines()
         garden = [list(r) for r in garden]
-        print(garden)
 
         steps = total_steps(garden, 6)
         
