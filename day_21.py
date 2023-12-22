@@ -42,7 +42,10 @@ def find_steps(garden, start):
     x = start[0] + 1
     y = start[1] + 1
 
-    def flood_fill(x, y, current_steps):
+    queue = []
+    
+    def bfs(node):
+        x, y, current_steps = node
         if garden[y][x] == "#":
             return
         if isinstance(garden[y][x], int):
@@ -50,12 +53,16 @@ def find_steps(garden, start):
                 return
 
         garden[y][x] = current_steps
-        flood_fill(x + 1, y, current_steps + 1)
-        flood_fill(x - 1, y, current_steps + 1)
-        flood_fill(x, y + 1, current_steps + 1)
-        flood_fill(x, y - 1, current_steps + 1)
+        queue.append((x + 1, y, current_steps + 1))
+        queue.append((x - 1, y, current_steps + 1))
+        queue.append((x, y + 1, current_steps + 1))
+        queue.append((x, y - 1, current_steps + 1))
 
-    flood_fill(x, y, 0)
+    queue.append((x, y, 0))
+
+    while queue:
+        node = queue.pop(0)
+        bfs(node)
 
     return [r[1:-1] for r in garden[1:-1]]
 
