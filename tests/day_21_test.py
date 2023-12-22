@@ -1,5 +1,5 @@
 from copy import deepcopy
-from day_21 import total_steps, find_steps
+from day_21 import total_steps, find_steps, find_endings
 
 class TestTotalSteps:
     def skip_test_returns_0_when_no_options(self):
@@ -149,3 +149,44 @@ a9876543210""".splitlines()
         steps = find_steps(garden, (10,10))
 
         assert steps == expected
+
+class TestFindEndings:
+    def test_returns_number_of_even_endings(self):
+        garden = """...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........""".splitlines()
+        garden = [list(r) for r in garden]
+
+        garden = find_steps(garden, (5,5))
+
+        valid_endings = find_endings(garden, True)
+
+        assert valid_endings == 42
+
+    def test_returns_number_of_odd_endings(self):
+        garden = """...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........""".splitlines()
+        garden = [list(r) for r in garden]
+
+        garden = find_steps(garden, (10,5))
+
+        valid_endings = find_endings(garden, False)
+
+        assert valid_endings == 42
