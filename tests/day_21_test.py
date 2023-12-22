@@ -190,3 +190,43 @@ class TestFindEndings:
         valid_endings = find_endings(garden, False)
 
         assert valid_endings == 42
+
+    def test_only_counts_number_within_distance_even(self):
+        garden = """...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........""".splitlines()
+        garden = [list(r) for r in garden]
+
+        garden = find_steps(garden, (10,5))
+
+        valid_endings = find_endings(garden, True, 7)
+
+        assert valid_endings == 11
+
+    def test_only_counts_number_within_distance_odd(self):
+        garden = """...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........""".splitlines()
+        garden = [list(r) for r in garden]
+
+        garden = find_steps(garden, (10,5))
+
+        valid_endings = find_endings(garden, False, 7)
+
+        assert valid_endings == 14
