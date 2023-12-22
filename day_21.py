@@ -73,7 +73,7 @@ def find_endings(distances, even, within=-1):
     total = 0
     for y in distances:
         for x in y:
-            if x != "#" and x % 2 == remainder:
+            if isinstance(x, int) and x % 2 == remainder:
                 if within == -1 or x <= within:
                     total += 1
 
