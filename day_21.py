@@ -59,6 +59,19 @@ def find_steps(garden, start):
 
     return [r[1:-1] for r in garden[1:-1]]
 
+def find_endings(distances, even, within=-1):
+    """returns number of valid endings within set distance"""
+    remainder = 0 if even else 1
+
+    total = 0
+    for y in distances:
+        for x in y:
+            if x != "#" and x % 2 == remainder:
+                total += 1   
+            else:
+
+    return total
+
 if __name__ == "__main__":
     with open("inputs/day_21.txt") as f:
         garden = f.read().splitlines()
