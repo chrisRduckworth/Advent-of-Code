@@ -150,6 +150,38 @@ a9876543210""".splitlines()
 
         assert steps == expected
 
+    def test_accepts_optional_initial_step_argument(self):
+        garden = """...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........""".splitlines()
+        garden = [list(r) for r in garden]
+
+        expected = """6789abcdefg
+56789###f#h
+4###a##de#i
+34#6#abc#gh
+2345#9#defg
+1##678####h
+2##78#abc#i
+3456789##kj
+4##7#9####i
+5##89##e##h
+6789abcdefg""".splitlines()
+
+        expected = [["#" if x == "#" else int(x, base=30) for x in list(r)] for r in expected]
+
+        steps = find_steps(garden, (0,5), 1)
+
+        assert steps == expected
+
 class TestFindEndings:
     def test_returns_number_of_even_endings(self):
         garden = """...........

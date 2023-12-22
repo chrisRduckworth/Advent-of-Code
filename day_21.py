@@ -31,7 +31,7 @@ def total_steps(garden, steps):
                     total += 1
     return total
 
-def find_steps(garden, start):
+def find_steps(garden, start, starting_step=0):
     """returns an array of the distances from a start point"""
     # pad garden with #s
     garden = deepcopy(garden)
@@ -58,7 +58,7 @@ def find_steps(garden, start):
         queue.append((x, y + 1, current_steps + 1))
         queue.append((x, y - 1, current_steps + 1))
 
-    queue.append((x, y, 0))
+    queue.append((x, y, starting_step))
 
     while queue:
         node = queue.pop(0)
