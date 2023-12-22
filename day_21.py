@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 def total_steps(garden, steps):
     garden.insert(0, list("#" * len(garden[0])))
     garden.append(list("#" * len(garden[0])))
@@ -28,11 +30,38 @@ def total_steps(garden, steps):
                 if x % 2 == steps % 2:
                     total += 1
     return total
-    
+
+def find_steps(garden, start):
+    """returns an array of the distances from a start point"""
+    # pad garden with #s
+    garden = deepcopy(garden)
+    garden.insert(0, list("#" * len(garden[0])))
+    garden.append(list("#" * len(garden[0])))
+    garden = [["#", *r, "#"] for r in garden]
+
+    x = start[0] + 1
+    y = start[1] + 1
+
+    def flood_fill(x, y, current_steps):
+        if garden[y][x] == "#":
+            return
+        if isinstance(garden[y][x], int):
+            if garden[y][x] <= current_steps:
+                return
+
+        garden[y][x] = current_steps
+        flood_fill(x + 1, y, current_steps + 1)
+        flood_fill(x - 1, y, current_steps + 1)
+        flood_fill(x, y + 1, current_steps + 1)
+        flood_fill(x, y - 1, current_steps + 1)
+
+    flood_fill(x, y, 0)
+
+    return [r[1:-1] for r in garden[1:-1]]
+
 if __name__ == "__main__":
     with open("inputs/day_21.txt") as f:
         garden = f.read().splitlines()
         garden = [list(r) for r in garden]
-        print("\n".join("".join(r) for r in garden))
         steps = total_steps(garden, 64)
         print(steps, "< total steps")
