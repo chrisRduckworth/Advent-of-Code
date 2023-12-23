@@ -262,6 +262,7 @@ class TestFindEndings:
         valid_endings = find_endings(garden, False, 7)
 
         assert valid_endings == 14
+
 class TestBruteForce:
     def test_returns_endings(self):
         garden = """...........
@@ -285,3 +286,23 @@ class TestBruteForce:
         assert brute_force(garden, 500) == 167004
         # assert brute_force(garden, 1000) == 668697
         # assert brute_force(garden, 5000) == 16733044
+
+class TestFindAllEndings:
+    def test_returns_all_possible_endings(self):
+        garden = """...
+.S.
+...""".splitlines()
+        garden = [list(r) for r in garden]
+
+        assert find_all_endings(garden, 7) == brute_force(garden, 7)
+
+        garden = """.......
+.......
+.......
+...S...
+.......
+.......
+.......""".splitlines()
+        garden = [list(r) for r in garden]
+
+        assert find_all_endings(garden, 17) == brute_force(garden, 17)
