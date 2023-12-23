@@ -79,6 +79,73 @@ def find_endings(distances, even, within=-1):
 
     return total
 
+def brute_force(garden, s):
+    garden = deepcopy(garden)
+
+    s_y = [i for i, r in enumerate(garden) if "S" in r][0]
+    s_x = [i for i, c in enumerate(garden[s_y]) if "S" == c][0]
+
+    garden = [["#" if x == "#" else {} for x in r] for r in garden]
+    width = len(garden[0])
+    height = len(garden)
+    
+    queue = []
+
+    def bfs(node):
+        x, y, current_steps, tile_pos = node
+        if garden[y][x] == "#" or current_steps > s:
+            return
+        if tile_pos in garden[y][x] and garden[y][x][tile_pos] <= current_steps:
+            return
+
+        garden[y][x][tile_pos] = current_steps
+        
+
+        x_next = x + 1
+        x_prev = x - 1
+        tile_x_next = tile_pos[0]
+        tile_x_prev = tile_pos[0]
+
+        if x == 0:
+            x_prev = width - 1
+            tile_x_prev = tile_pos[0] - 1
+        elif x == width - 1:
+            x_next = 0
+            tile_x_next = tile_pos[0] + 1
+
+        y_next = y + 1
+        y_prev = y - 1
+        tile_y_next = tile_pos[1]
+        tile_y_prev = tile_pos[1]
+
+        if y == 0:
+            y_prev = height - 1
+            tile_y_prev = tile_pos[1] - 1
+        elif y == height - 1:
+            y_next = 0
+            tile_y_next = tile_pos[1] + 1
+
+        queue.append((x_next, y, current_steps + 1, (tile_x_next, tile_pos[1])))
+        queue.append((x_prev, y, current_steps + 1, (tile_x_prev, tile_pos[1])))
+        queue.append((x, y_next, current_steps + 1, (tile_pos[0], tile_y_next)))
+        queue.append((x, y_prev, current_steps + 1, (tile_pos[0], tile_y_prev)))
+        
+    queue.append((s_x, s_y, 0, (0,0)))
+
+    while queue:
+        node = queue.pop(0)
+        bfs(node)
+
+    total = 0
+    for r in garden:
+        for x in r:
+            if x != "#":
+                for k in x:
+                    if x[k] % 2 == s % 2:
+                        total += 1
+
+    return total
+
 if __name__ == "__main__":
     with open("inputs/day_21.txt") as f:
         garden = f.read().splitlines()

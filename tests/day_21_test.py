@@ -1,5 +1,5 @@
 from copy import deepcopy
-from day_21 import total_steps, find_steps, find_endings
+from day_21 import total_steps, find_steps, find_endings, find_all_endings, brute_force
 
 class TestTotalSteps:
     def skip_test_returns_0_when_no_options(self):
@@ -262,3 +262,26 @@ class TestFindEndings:
         valid_endings = find_endings(garden, False, 7)
 
         assert valid_endings == 14
+class TestBruteForce:
+    def test_returns_endings(self):
+        garden = """...........
+.....###.#.
+.###.##..#.
+..#.#...#..
+....#.#....
+.##..S####.
+.##..#...#.
+.......##..
+.##.#.####.
+.##..##.##.
+...........
+""".splitlines()
+        garden = [list(r) for r in garden]
+
+        assert brute_force(garden, 6) == 16
+        assert brute_force(garden, 10) == 50
+        assert brute_force(garden, 50) == 1594
+        assert brute_force(garden, 100) == 6536
+        assert brute_force(garden, 500) == 167004
+        # assert brute_force(garden, 1000) == 668697
+        # assert brute_force(garden, 5000) == 16733044
