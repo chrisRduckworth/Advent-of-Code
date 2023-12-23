@@ -79,6 +79,61 @@ def find_endings(distances, even, within=-1):
 
     return total
 
+def find_all_endings(garden, s):
+    # Note that the garden is a square of odd length,
+    # S is in the center of the tile,
+    # and that the axes out from S are all empty
+    
+    # s = steps, w = width of tile
+    w = len(garden)
+    # l = length of middle row of full tiles
+    l = int((2 * (s - w) + 1) / w)
+
+    total = 0
+
+    """Full tiles"""
+    # total number of full even tiles 
+    E = int(((l + 1) ** 2) / 4)
+    # total number of full odd tiles
+    O = int(((l - 1) ** 2) / 4)
+    
+    center = int((w - 1) / 2)
+    distances = find_steps(garden, (center, center))
+    # number of endings an even number of steps away
+    e = find_endings(distances, True)
+    # number of endings an odd number of steps away
+    o = find_endings(distances, False)
+
+    total += E * e + O * o
+
+    """Axis ends"""
+    # tiles at the end of axes are odd
+    # and distance is such that it is precisely equal to width
+    for x in [(w - 1, center), (center, w - 1), (0, center), (center, 0)]:
+        distances = find_steps(garden, x, 1)
+        valid_endings = find_endings(distances, False, w)
+        total += valid_endings
+
+    """Inner diagonals"""
+    # inner diagonals are odd
+    # there are (l-1)/2 inner diagonals starting from each corner
+    # and all tiles within w + (w-1) / 2 are reachable
+    for x in [(0, 0), (0, w-1), (w-1, 0), (w-1, w-1)]:
+        distances = find_steps(garden, x)
+        valid_endings = find_endings(distances, False, w + (w - 1) / 2 - 1)
+        total += valid_endings * int((l - 1) / 2)
+
+    """Outer diagonals"""
+    # outer diagonals are even
+    # there are (l+1)/2 outer diagonals starting from each corner
+    # and all tiles within (w-1)/2 are reachable
+    for x in [(0, 0), (0, w-1), (w-1, 0), (w-1, w-1)]:
+        distances = find_steps(garden, x)
+        valid_endings = find_endings(distances, True, (w - 1) / 2 - 1)
+        total += valid_endings * int((l + 1) / 2)
+        
+    return total
+
 def brute_force(garden, s):
     garden = deepcopy(garden)
 
@@ -150,5 +205,7 @@ if __name__ == "__main__":
     with open("inputs/day_21.txt") as f:
         garden = f.read().splitlines()
         garden = [list(r) for r in garden]
-        steps = total_steps(garden, 64)
-        print(steps, "< total steps")
+        #steps = total_steps(garden, 64)
+        #print(steps, "< total steps")
+        total_endings = find_all_endings(garden, 26501365)
+        print(total_endings, "< total endings")
