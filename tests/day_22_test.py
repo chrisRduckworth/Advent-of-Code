@@ -1,4 +1,4 @@
-from day_22 import create_tower
+from day_22 import create_tower, fall_blocks
 
 class TestCreateTower:
     def test_turns_single_block_into_tower(self):
@@ -82,3 +82,25 @@ class TestCreateTower:
         tower = create_tower(blocks)
 
         assert tower == expected
+
+class TestFallBlocks:
+    def test_trims_empty_slices(self):
+        pass
+
+    def test_single_x_block_falls(self):
+        pass
+
+    def test_single_y_block_falls(self):
+        pass
+
+    def test_single_z_block_falls(self):
+        pass
+    
+    def test_1_length_block_falls(self):
+        pass
+
+    def test_prevents_falling_if_blocked(self):
+        pass
+
+    def test_falls__multiple_blocks(self):
+
