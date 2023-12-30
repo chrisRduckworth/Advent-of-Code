@@ -1,3 +1,5 @@
+from itertools import chain
+
 def create_tower(blocks):
     # position (x,y,z) = tower[z][y][x]
     max_x = max(block[1][0] for block in blocks) + 1
@@ -34,3 +36,20 @@ def create_tower(blocks):
             tower[z][y][x] = i + 1
             
     return tower
+
+def blocks_below(tower, block):
+    """returns the blocks below the given block"""
+    below = set()
+
+    if block in list(chain.from_iterable(tower[0])):
+        return below
+
+    for z_i, s in enumerate(tower[1:]):
+        z = z_i + 1
+        for y, r in enumerate(s):
+            for x, b in enumerate(r):
+                block_below = tower[z-1][y][x]
+                if b == block and block_below not in [False, b]:
+                    below.add(block_below)
+
+    return below
