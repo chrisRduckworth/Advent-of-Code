@@ -6,14 +6,14 @@ class TestCreateTower:
 
         tower = create_tower(blocks)
 
-        assert tower == [[[False, False, 0], [False, False, 0], [False, False, 0]]]
+        assert tower == [[[False, False, 1], [False, False, 1], [False, False, 1]]]
 
     def test_includes_3_dimensions(self):
         blocks = [((1,1,0), (1,1,2))]
 
         tower = create_tower(blocks)
 
-        assert tower == [[[False, False], [False, 0]],[[False, False], [False, 0]],[[False, False], [False, 0]]]
+        assert tower == [[[False, False], [False, 1]],[[False, False], [False, 1]],[[False, False], [False, 1]]]
     
     def test_has_correct_lengths(self):
         blocks = [((1,1,0), (1,1,2)), ((2,0,1), (2,2,1)), ((0,1,3), (3,1,3))]
@@ -29,7 +29,7 @@ class TestCreateTower:
 
         tower = create_tower(blocks)
 
-        assert tower == [[[False, False], [False, False]], [[False, False], [False, 0]]]
+        assert tower == [[[False, False], [False, False]], [[False, False], [False, 1]]]
 
     def test_creates_multiple_blocks(self):
         blocks =[
