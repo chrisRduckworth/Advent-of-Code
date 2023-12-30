@@ -1,4 +1,4 @@
-from day_22 import create_tower
+from day_22 import create_tower, blocks_below
 
 class TestCreateTower:
     def test_turns_single_block_into_tower(self):
@@ -47,38 +47,84 @@ class TestCreateTower:
                 [[False, False, False],
                  [False, False, False],
                  [False, False, False],],
-                [[False, 0, False],
-                 [False, 0, False],
-                 [False, 0, False],],
-                [[1, 1, 1],
+                [[False, 1, False],
+                 [False, 1, False],
+                 [False, 1, False],],
+                [[2, 2, 2],
                  [False, False, False],
                  [False, False, False],],
                 [[False, False, False],
                  [False, False, False],
-                 [2, 2, 2],],
-                [[3, False, False],
-                 [3, False, False],
-                 [3, False, False],],
-                [[False, False, 4],
-                 [False, False, 4],
-                 [False, False, 4],],
+                 [3, 3, 3],],
+                [[4, False, False],
+                 [4, False, False],
+                 [4, False, False],],
+                [[False, False, 5],
+                 [False, False, 5],
+                 [False, False, 5],],
                 [[False, False, False],
-                 [5, 5, 5],
+                 [6, 6, 6],
                  [False, False, False],],
                 [[False, False, False],
                  [False, False, False],
                  [False, False, False],],
                 [[False, False, False],
-                 [False, 6, False],
+                 [False, 7, False],
                  [False, False, False],],
                 [[False, False, False],
-                 [False, 6, False],
+                 [False, 7, False],
                  [False, False, False],],
                 [[False, False, False],
                  [False, False, False],
-                 [False, False, 7],],
+                 [False, False, 8],],
                 ]
 
         tower = create_tower(blocks)
 
         assert tower == expected
+
+
+class TestBlocksBelow:
+    def test_returns_empty_if_no_blocks_below(self):
+        tower = create_tower([((1,1,1), (1,1,1))])
+
+        below = blocks_below(tower, 1)
+
+        assert below == set()
+
+    def test_returns_empty_if_on_bottom_row(self):
+        tower = create_tower([((1,1,0), (1,1,0))])
+
+        below = blocks_below(tower, 1)
+
+        assert below == set()
+
+    def test_returns_single_block_below(self):
+        tower = create_tower([
+            ((1,1,1), (1,1,1)),
+            ((1,1,0), (1,1,0))
+            ])
+
+        below = blocks_below(tower, 1)
+
+        assert below == {2}
+
+    def test_does_not_include_itself(self):
+        tower = create_tower([
+            ((1,1,1), (1,1,4))
+            ])
+        
+        below = blocks_below(tower, 1)
+
+        assert below == set()
+
+    def test_returns_multiple_below(self):
+        tower = create_tower([
+            ((0,0,0), (0,0,0)),
+            ((1,0,0), (1,0,0)),
+            ((0,0,1), (1,0,1))
+            ])
+
+        below = blocks_below(tower, 3)
+
+        assert below == {1, 2}
