@@ -1,5 +1,5 @@
 from copy import deepcopy
-from day_22 import create_tower, blocks_below, fall_blocks
+from day_22 import create_tower, blocks_below, fall_blocks, count_disintegrate
 
 class TestCreateTower:
     def test_turns_single_block_into_tower(self):
@@ -227,3 +227,22 @@ class TestFallBlocks:
         fall_blocks(blocks)
 
         assert blocks == expected
+
+class TestCountDisintegrate:
+    def test_returns_1_for_single_block(self):
+        blocks = [[[0,0,0], [0,1,0]]]
+
+        assert count_disintegrate(blocks) == 1
+
+    def test_returns_number_of_disintegrateable_blocks(self):
+        blocks = [
+                [[1, 0, 0], [1, 2, 0]], 
+                [[0, 0, 1], [2, 0, 1]], 
+                [[0, 2, 1], [2, 2, 1]],
+                [[0, 0, 2], [0, 2, 2]], 
+                [[2, 0, 2], [2, 2, 2]], 
+                [[0, 1, 3], [2, 1, 3]], 
+                [[1, 1, 4], [1, 1, 5]]
+            ]
+
+        assert count_disintegrate(blocks) == 5
