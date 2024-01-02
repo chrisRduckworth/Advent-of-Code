@@ -37,19 +37,34 @@ def create_tower(blocks):
             
     return tower
 
-def blocks_below(tower, block):
-    """returns the blocks below the given block"""
+def blocks_below(tower, block, above=False):
+    """returns the blocks above or below the given block"""
     below = set()
 
-    if block in list(chain.from_iterable(tower[0])):
+
+    if not above:
+        if block in list(chain.from_iterable(tower[0])):
+            return below
+
+        for z, s in enumerate(tower[1:]):
+            for y, r in enumerate(s):
+                for x, b in enumerate(r):
+                    block_below = tower[z][y][x]
+                    if b == block and block_below not in [False, b]:
+                        below.add(block_below)
+
         return below
 
-    for z_i, s in enumerate(tower[1:]):
-        z = z_i + 1
-        for y, r in enumerate(s):
-            for x, b in enumerate(r):
-                block_below = tower[z-1][y][x]
-                if b == block and block_below not in [False, b]:
-                    below.add(block_below)
+    else:
+        if block in list(chain.from_iterable(tower[-1])):
+            return below
 
-    return below
+        for z, s in enumerate(tower[:-1]):
+            for y, r in enumerate(s):
+                for x, b in enumerate(r):
+                    block_above = tower[z+1][y][x]
+                    if b == block and block_above not in [False, b]:
+                        below.add(block_above)
+        
+        return below
+

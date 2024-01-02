@@ -128,3 +128,54 @@ class TestBlocksBelow:
         below = blocks_below(tower, 3)
 
         assert below == {1, 2}
+
+class TestBlocksAbove:
+    def test_returns_empty_if_no_blocks_above(self):
+        tower = create_tower([
+            ((0,0,0), (0,0,0)),
+            ((1,1,1), (1,1,1))
+            ])
+
+        below = blocks_below(tower, 1, True)
+
+        assert below == set()
+
+    def test_returns_empty_if_on_top_row(self):
+        tower = create_tower([
+            ((0,0,0), (0,0,0)),
+            ((1,1,1), (1,1,1))
+            ])
+
+        below = blocks_below(tower, 2, True)
+
+        assert below == set()
+
+    def test_returns_single_block_above(self):
+        tower = create_tower([
+            ((1,1,1), (1,1,1)),
+            ((1,1,0), (1,1,0))
+            ])
+
+        below = blocks_below(tower, 2, True)
+
+        assert below == {1}
+
+    def test_does_not_include_itself(self):
+        tower = create_tower([
+            ((1,1,1), (1,1,4))
+            ])
+        
+        below = blocks_below(tower, 1, True)
+
+        assert below == set()
+
+    def test_returns_multiple_above(self):
+        tower = create_tower([
+            ((0,0,0), (1,0,0)),
+            ((1,0,1), (1,0,1)),
+            ((0,0,1), (0,0,1))
+            ])
+
+        below = blocks_below(tower, 1, True)
+
+        assert below == {2, 3}
