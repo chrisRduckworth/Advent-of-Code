@@ -88,14 +88,14 @@ class TestBlocksBelow:
     def test_returns_empty_if_no_blocks_below(self):
         tower = create_tower([((1,1,1), (1,1,1))])
 
-        below = blocks_below(tower, 1)
+        below = blocks_below(tower, ((1,1,1), (1,1,1)), 1)
 
         assert below == set()
 
     def test_returns_empty_if_on_bottom_row(self):
         tower = create_tower([((1,1,0), (1,1,0))])
 
-        below = blocks_below(tower, 1)
+        below = blocks_below(tower, ((1,1,0), (1,1,0)), 1)
 
         assert below == set()
 
@@ -105,7 +105,7 @@ class TestBlocksBelow:
             ((1,1,0), (1,1,0))
             ])
 
-        below = blocks_below(tower, 1)
+        below = blocks_below(tower,((1,1,1), (1,1,1)), 1)
 
         assert below == {2}
 
@@ -114,7 +114,7 @@ class TestBlocksBelow:
             ((1,1,1), (1,1,4))
             ])
         
-        below = blocks_below(tower, 1)
+        below = blocks_below(tower,((1,1,1), (1,1,4)), 1)
 
         assert below == set()
 
@@ -125,7 +125,7 @@ class TestBlocksBelow:
             ((0,0,1), (1,0,1))
             ])
 
-        below = blocks_below(tower, 3)
+        below = blocks_below(tower, ((0,0,1), (1,0,1)), 3)
 
         assert below == {1, 2}
 
@@ -136,7 +136,7 @@ class TestBlocksAbove:
             ((1,1,1), (1,1,1))
             ])
 
-        below = blocks_below(tower, 1, True)
+        below = blocks_below(tower, ((0,0,0), (0,0,0)), 1, True)
 
         assert below == set()
 
@@ -146,7 +146,7 @@ class TestBlocksAbove:
             ((1,1,1), (1,1,1))
             ])
 
-        below = blocks_below(tower, 2, True)
+        below = blocks_below(tower, ((1,1,1), (1,1,1)), 2, True)
 
         assert below == set()
 
@@ -156,7 +156,7 @@ class TestBlocksAbove:
             ((1,1,0), (1,1,0))
             ])
 
-        below = blocks_below(tower, 2, True)
+        below = blocks_below(tower, ((1,1,0), (1,1,0)), 2, True)
 
         assert below == {1}
 
@@ -165,7 +165,7 @@ class TestBlocksAbove:
             ((1,1,1), (1,1,4))
             ])
         
-        below = blocks_below(tower, 1, True)
+        below = blocks_below(tower, ((1,1,1), (1,1,4)), 1, True)
 
         assert below == set()
 
@@ -176,7 +176,7 @@ class TestBlocksAbove:
             ((0,0,1), (0,0,1))
             ])
 
-        below = blocks_below(tower, 1, True)
+        below = blocks_below(tower, ((0,0,0), (1,0,0)), 1, True)
 
         assert below == {2, 3}
 
