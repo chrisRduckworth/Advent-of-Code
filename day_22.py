@@ -1,4 +1,5 @@
 from itertools import chain
+from copy import deepcopy
 
 def create_tower(blocks):
     # position (x,y,z) = tower[z][y][x]
@@ -68,3 +69,14 @@ def blocks_below(tower, block, above=False):
         
         return below
 
+def fall_blocks(blocks):
+    prev_blocks = []
+    while prev_blocks != blocks:
+        prev_blocks = deepcopy(blocks)
+        tower = create_tower(blocks)
+        for block, coords in enumerate(blocks):
+            if len(blocks_below(tower, block + 1)) == 0 and coords[0][2] != 0:
+                coords[0][2] -= 1
+                coords[1][2] -= 1
+
+    return blocks
