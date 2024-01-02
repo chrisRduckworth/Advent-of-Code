@@ -79,3 +79,12 @@ def count_disintegrate(blocks):
         if all(len(blocks_below(tower, blocks[a-1], a)) != 1 for a in blocks_above):
             total += 1
     return total
+
+if __name__ == "__main__":
+    with open("inputs/day_22.txt") as f:
+        blocks = f.read().splitlines()
+        blocks = [b.split("~") for b in blocks]
+        blocks = [[[int(x) for x in b_c.split(',')] for b_c in b] for b in blocks]
+        fallen_blocks = fall_blocks(blocks)
+        disintegrateable = count_disintegrate(fallen_blocks)
+        print(disintegrateable, "< disintegratable")
