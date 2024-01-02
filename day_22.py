@@ -1,4 +1,3 @@
-from itertools import chain
 from copy import deepcopy
 
 def create_tower(blocks):
@@ -58,6 +57,7 @@ def blocks_below(tower, block, block_number, above=False):
 
 def fall_blocks(blocks):
     prev_blocks = []
+    moved = set()
     while prev_blocks != blocks:
         prev_blocks = deepcopy(blocks)
         tower = create_tower(blocks)
@@ -65,8 +65,9 @@ def fall_blocks(blocks):
             if len(blocks_below(tower, coords, block + 1)) == 0 and coords[0][2] != 0:
                 coords[0][2] -= 1
                 coords[1][2] -= 1
+                moved.add(block + 1)
 
-    return blocks
+    return blocks, moved
 
 def count_disintegrate(blocks):
     tower = create_tower(blocks)
@@ -80,11 +81,22 @@ def count_disintegrate(blocks):
             total += 1
     return total
 
+def disintegrate_falling(blocks):
+    blocks = fall_blocks(blocks)[0]
+    total = 0
+    for block in blocks:
+        blocks_without = deepcopy([b for b in blocks if b != block])
+        moved = fall_blocks(blocks_without)[1]
+        total += len(moved)
+    return total
+
 if __name__ == "__main__":
     with open("inputs/day_22.txt") as f:
         blocks = f.read().splitlines()
         blocks = [b.split("~") for b in blocks]
         blocks = [[[int(x) for x in b_c.split(',')] for b_c in b] for b in blocks]
-        fallen_blocks = fall_blocks(blocks)
+        fallen_blocks = fall_blocks(blocks)[0]
         disintegrateable = count_disintegrate(fallen_blocks)
         print(disintegrateable, "< disintegratable")
+        total_moved = disintegrate_falling(blocks)
+        print(total_moved, "< sum of fallen blocks")
