@@ -1,4 +1,5 @@
-from day_22 import create_tower, blocks_below
+from copy import deepcopy
+from day_22 import create_tower, blocks_below, fall_blocks
 
 class TestCreateTower:
     def test_turns_single_block_into_tower(self):
@@ -179,3 +180,51 @@ class TestBlocksAbove:
         below = blocks_below(tower, 1, True)
 
         assert below == {2, 3}
+
+class TestFallBlocks:
+    def test_does_nothing_on_bottom_row(self):
+        blocks = [
+            [[0,0,0], [0,0,2]],
+            [[1,0,0], [1,1,0]]
+            ]
+        expected = deepcopy(blocks)
+
+        fall_blocks(blocks)
+
+        assert blocks == expected
+
+    def test_does_not_fall_blocks_above_others(self):
+        blocks = [
+            [[1,1,0], [1,1,0]],
+            [[1,1,1], [1,1,1]]
+            ]
+        expected = deepcopy(blocks)
+
+        fall_blocks(blocks)
+
+        assert blocks == expected
+
+    def test_falls_blocks(self):
+        blocks = [
+                [[1,0,1], [1,2,1]],
+                [[0,0,2], [2,0,2]],
+                [[0,2,3], [2,2,3]],
+                [[0,0,4], [0,2,4]],
+                [[2,0,5], [2,2,5]],
+                [[0,1,6], [2,1,6]],
+                [[1,1,8], [1,1,9]],
+            ]
+
+        expected = [
+                [[1, 0, 0], [1, 2, 0]], 
+                [[0, 0, 1], [2, 0, 1]], 
+                [[0, 2, 1], [2, 2, 1]],
+                [[0, 0, 2], [0, 2, 2]], 
+                [[2, 0, 2], [2, 2, 2]], 
+                [[0, 1, 3], [2, 1, 3]], 
+                [[1, 1, 4], [1, 1, 5]]
+            ]
+
+        fall_blocks(blocks)
+
+        assert blocks == expected
