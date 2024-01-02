@@ -29,3 +29,4 @@ A few of the solutions are brute-force (*cough day 5 cough*) and might take a wh
 | 19  | ⭐⭐ |
 | 20  | ⭐   |
 | 21  | ⭐⭐ |
+| 22  | ⭐⭐ |
