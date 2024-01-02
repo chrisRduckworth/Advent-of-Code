@@ -81,3 +81,15 @@ def fall_blocks(blocks):
                 coords[1][2] -= 1
 
     return blocks
+
+def count_disintegrate(blocks):
+    tower = create_tower(blocks)
+    total = 0
+    for block in range(1, len(blocks) + 1):
+        # a block b is valid if, for each block above it,
+        # there are more than 1 blocks below it - b and atleast
+        # one other.
+        blocks_above = blocks_below(tower, block, True)
+        if all(len(blocks_below(tower, a)) > 1 for a in blocks_above):
+            total += 1
+    return total
