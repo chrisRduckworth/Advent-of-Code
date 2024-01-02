@@ -84,7 +84,6 @@ class TestCreateTower:
 
         assert tower == expected
 
-
 class TestBlocksBelow:
     def test_returns_empty_if_no_blocks_below(self):
         tower = create_tower([((1,1,1), (1,1,1))])

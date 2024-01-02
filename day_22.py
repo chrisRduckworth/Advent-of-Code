@@ -2,6 +2,7 @@ from itertools import chain
 from copy import deepcopy
 
 def create_tower(blocks):
+    """creates a 3d array of blocks"""
     # position (x,y,z) = tower[z][y][x]
     max_x = max(block[1][0] for block in blocks) + 1
     max_y = max(block[1][1] for block in blocks) + 1
