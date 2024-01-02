@@ -1,5 +1,5 @@
 from copy import deepcopy
-from day_22 import create_tower, blocks_below, fall_blocks, count_disintegrate
+from day_22 import create_tower, blocks_below, fall_blocks, count_disintegrate, disintegrate_falling
 
 class TestCreateTower:
     def test_turns_single_block_into_tower(self):
@@ -188,7 +188,7 @@ class TestFallBlocks:
             ]
         expected = deepcopy(blocks)
 
-        fall_blocks(blocks)
+        blocks = fall_blocks(blocks)[0]
 
         assert blocks == expected
 
@@ -199,7 +199,7 @@ class TestFallBlocks:
             ]
         expected = deepcopy(blocks)
 
-        fall_blocks(blocks)
+        blocks = fall_blocks(blocks)[0]
 
         assert blocks == expected
 
@@ -224,9 +224,25 @@ class TestFallBlocks:
                 [[1, 1, 4], [1, 1, 5]]
             ]
 
-        fall_blocks(blocks)
+        blocks = fall_blocks(blocks)[0]
 
         assert blocks == expected
+
+    def test_returns_set_of_moved_blocks(self):
+        blocks = [
+                [[1,0,0], [1,2,0]],
+                [[0,0,1], [2,0,1]],
+                [[0,2,3], [2,2,3]],
+                [[0,0,4], [0,2,4]],
+                [[2,0,5], [2,2,5]],
+                [[0,1,6], [2,1,6]],
+                [[1,1,8], [1,1,9]],
+            ]
+
+        moved = fall_blocks(blocks)[1]
+
+        assert moved == {3,4,5,6,7}
+
 
 class TestCountDisintegrate:
     def test_returns_1_for_single_block(self):
@@ -246,3 +262,17 @@ class TestCountDisintegrate:
             ]
 
         assert count_disintegrate(blocks) == 5
+
+class TestDisintegrateFalling:
+    def test_returns_sum_of_fallen_bricks(self):
+        blocks = [
+                [[1, 0, 0], [1, 2, 0]], 
+                [[0, 0, 1], [2, 0, 1]], 
+                [[0, 2, 1], [2, 2, 1]],
+                [[0, 0, 2], [0, 2, 2]], 
+                [[2, 0, 2], [2, 2, 2]], 
+                [[0, 1, 3], [2, 1, 3]], 
+                [[1, 1, 4], [1, 1, 5]]
+            ]
+
+        assert disintegrate_falling(blocks) == 7
