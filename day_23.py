@@ -1,4 +1,5 @@
 from graphlib import TopologicalSorter
+import sys
 
 def generate_graph(maze):
     """generates a dictionary of nodes and their predocessors"""
@@ -40,3 +41,10 @@ def longest_path(graph, end):
         distances[node] = distances[max(graph[node], key=distances.get)] + 1
 
     return distances[end]
+if __name__ == "__main__":
+    with open("inputs/day_23.txt") as f:
+        maze = [list(r) for r in f.read().splitlines()]
+        sys.setrecursionlimit(10000)
+        graph = generate_graph(maze)
+        longest = longest_path(graph, (len(maze[0]) - 2, len(maze) - 1))
+        print(longest, "< longest possible path")
