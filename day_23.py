@@ -41,6 +41,32 @@ def longest_path(graph, end):
         distances[node] = distances[max(graph[node], key=distances.get)] + 1
 
     return distances[end]
+
+# part 2:
+# i can't see a way to do this outside of brute force which is MESSY
+
+def part_2(maze):
+    """returns the longest path ignoring slopes"""
+    maze = [["#"] * len(maze[0]), *maze, ["#"] * len(maze[0])]
+
+    distances = {}
+    optimal = {}
+    queue = [(1, 1, [])]
+
+    while queue:
+        x, y, path = queue.pop(0)
+        if (x,y) in path or maze[y][x] == "#":
+            continue
+
+        distances[(x,y)] = len(path)
+        path = [*path, (x,y)]
+        optimal[(x,y)] = path
+
+        for d_x, d_y in [(1,0), (-1,0), (0,1), (0,-1)]:
+            queue.append((x + d_x, y + d_y, path))
+
+    return distances[(len(maze[0]) - 2), len(maze) - 2]
+
 if __name__ == "__main__":
     with open("inputs/day_23.txt") as f:
         maze = [list(r) for r in f.read().splitlines()]
