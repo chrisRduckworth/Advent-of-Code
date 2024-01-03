@@ -1,4 +1,4 @@
-from day_23 import generate_graph, longest_path
+from day_23 import generate_graph, longest_path, part_2
 
 class TestGenerateGraph:
     def test_returns_dict_of_simple_graph(self):
@@ -93,3 +93,58 @@ class TestLongestPath:
         longest = longest_path(graph, (len(maze[0]) - 2, len(maze) - 1))
 
         assert longest == 94
+
+class TestPart2:
+    def test_returns_longest_path_for_simple(self):
+        maze = """#.##
+#..#
+##.#""".splitlines()
+        maze = [list(r) for r in maze]
+
+        longest = part_2(maze)
+
+        assert longest == 3
+
+    def test_ignores_slopes(self):
+        maze = """#.###
+#.>.#
+#.#v#
+#.>.#
+###.#""".splitlines()
+        maze = [list(r) for r in maze]
+
+        longest = part_2(maze)
+
+        assert longest == 6
+
+    def test_works_on_large_graphs(self):
+        maze = """#.#####################
+#.......#########...###
+#######.#########.#.###
+###.....#.>.>.###.#.###
+###v#####.#v#.###.#.###
+###.>...#.#.#.....#...#
+###v###.#.#.#########.#
+###...#.#.#.......#...#
+#####.#.#.#######.#.###
+#.....#.#.#.......#...#
+#.#####.#.#.#########v#
+#.#...#...#...###...>.#
+#.#.#v#######v###.###v#
+#...#.>.#...>.>.#.###.#
+#####v#.#.###v#.#.###.#
+#.....#...#...#.#.#...#
+#.#########.###.#.#.###
+#...###...#...#...#.###
+###.###.#.###v#####v###
+#...#...#.#.>.>.#.>.###
+#.###.###.#.###.#.#v###
+#.....###...###...#...#
+#####################.#
+""".splitlines()
+
+        maze = [list(r) for r in maze]
+
+        longest = part_2(maze)
+
+        assert longest == 154
