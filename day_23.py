@@ -1,3 +1,5 @@
+from graphlib import TopologicalSorter
+
 def generate_graph(maze):
     """generates a dictionary of nodes and their predocessors"""
     maze = [["#"] * len(maze[0]), *maze, ["#"] * len(maze[0])]
@@ -27,3 +29,14 @@ def generate_graph(maze):
             reversed[next].add(node)
 
     return reversed
+
+def longest_path(graph, end):
+    ordered = tuple(TopologicalSorter(graph).static_order())
+    
+    distances = {}
+    distances[(1,0)] = 0
+
+    for node in ordered[1:]:
+        distances[node] = distances[max(graph[node], key=distances.get)] + 1
+
+    return distances[end]
