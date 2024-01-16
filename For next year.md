@@ -13,7 +13,8 @@ Consider using heapq to make finding the minimum much faster
  - Dijkstra - optimal pathfinding with weighted graphs
  - A* - optimal pathfinding with a heuristic
  - BFS (Breadth-first-search) - general pathfinding, more efficient than basic floodfill
- - D* - Dynamic A*, for when the graph changes
+ - D* - Dynamic A\*, for when the graph changes
+ - Longest Path - See wikipedia. Hopefully it's a directed acyclic graph, in which case you can use graphlib to sort. If it isn't try to trim the graph by removing nodes which are just straight and turning it into a weighted graph
 
 ### Areas
  - Flood fill - for finding what's inside a bounded shape
