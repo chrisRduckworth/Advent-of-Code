@@ -4,6 +4,9 @@ All solutions written in python. Tests written using pytest. Put your input for 
 python day_n.py
 ```
 A few of the solutions are brute-force (*cough day 5 cough*) and might take a while, but mostly they should run in reasonable time.
+
+I'm really pleased with how I did, I got much further than I expected (originally I'd have been pleased with day 10) and I learnt a lot about pytest and using algorithms efficiently.
+
 ## Results
 
 | Day | Stars |
